@@ -1,6 +1,9 @@
+using CounterfactualExplanations
 using TaijaData
 using Test
 
 @testset "TaijaData.jl" begin
-    # Write your tests here.
+    include("data.jl")
+    include("tabular.jl")
+    include("vision.jl")
 end
