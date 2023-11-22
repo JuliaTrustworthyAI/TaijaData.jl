@@ -1,5 +1,5 @@
 """
-    load_overlapping(n=250; seed=data_seed)
+    load_overlapping_raw(n=250; seed=data_seed)
 
 Loads overlapping synthetic data.
 """

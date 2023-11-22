@@ -1,7 +1,7 @@
 """
-    load_credit_default(n::Union{Nothing,Int}=5000)
+    load_credit_default_raw(n::Union{Nothing,Int}=5000)
 
-Loads and pre-processes UCI Credit Default data.
+Loads UCI Credit Default data.
 """
 function load_credit_default_raw(n::Union{Nothing,Int}=5000)
 

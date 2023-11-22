@@ -1,5 +1,5 @@
 """
-    load_blobs(n=250; seed=data_seed, kwrgs...)
+    load_blobs_raw(n=250; seed=data_seed, kwrgs...)
 
 Loads overlapping synthetic data.
 """

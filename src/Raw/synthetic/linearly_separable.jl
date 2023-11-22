@@ -1,5 +1,5 @@
 """
-    load_linearly_separable(n=250; seed=data_seed)
+    load_linearly_separable_raw(n=250; seed=data_seed)
 
 Loads linearly separable synthetic data.
 """

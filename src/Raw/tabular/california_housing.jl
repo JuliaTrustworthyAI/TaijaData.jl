@@ -1,7 +1,7 @@
 """
-    load_california_housing(n::Union{Nothing,Int}=5000)
+    load_california_housing_raw(n::Union{Nothing,Int}=5000)
 
-Loads and pre-processes California Housing data.
+Loads California Housing data.
 """
 function load_california_housing_raw(n::Union{Nothing,Int}=5000)
 

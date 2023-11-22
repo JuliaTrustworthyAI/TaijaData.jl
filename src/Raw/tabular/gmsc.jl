@@ -1,7 +1,7 @@
 """
-    load_gmsc(n::Union{Nothing,Int}=5000)
+    load_gmsc_raw(n::Union{Nothing,Int}=5000)
 
-Loads and pre-processes Give Me Some Credit (GMSC) data.
+Loads Give Me Some Credit (GMSC) data.
 """
 function load_gmsc_raw(n::Union{Nothing,Int}=5000)
 

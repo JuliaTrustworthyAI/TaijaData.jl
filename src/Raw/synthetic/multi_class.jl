@@ -1,5 +1,5 @@
 """
-    load_multi_class(n=250; seed=data_seed)
+    load_multi_class_raw(n=250; seed=data_seed)
 
 Loads multi-class synthetic data.
 """

@@ -1,7 +1,7 @@
 """
     load_fashion_mnist(n::Union{Nothing,Int}=nothing)
 
-Loads and prepares FashionMNIST data.
+Loads FashionMNIST data.
 """
 function load_fashion_mnist_raw(n::Union{Nothing,Int}=nothing)
     X, y = MLDatasets.FashionMNIST(:train)[:]
@@ -24,7 +24,7 @@ end
 """
     load_fashion_mnist_test()
 
-Loads and prepares FashionMNIST test data.
+Loads FashionMNIST test data.
 """
 function load_fashion_mnist_test_raw()
     X, y = MLDatasets.FashionMNIST(:test)[:]

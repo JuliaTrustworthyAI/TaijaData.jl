@@ -3,12 +3,10 @@ module TaijaData
 using DataAPI
 using Random
 using LazyArtifacts
-# using CounterfactualExplanations
 using MLJBase
 using CSV
 using DataFrames
 using MLJModels
-# using CounterfactualExplanations.DataPreprocessing
 using Flux
 using MLDatasets
 using StatsBase

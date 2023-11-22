@@ -1,16 +1,7 @@
 """
-    load_uci_adult(n::Union{Nothing, Int}=1000)
+    load_uci_adult_raw(n::Union{Nothing, Int}=1000)
 
-Load and preprocesses data from the UCI 'Adult' dataset
-
-# Arguments
-- `n::Union{Nothing, Int}=nothing`: The number of samples to subsample from the dataset.
-
-# Returns
-- `counterfactual_data::CounterfactualData`: A `CounterfactualData` object containing the preprocessed data.
-
-# Example
-data = load_uci_adult(20) # loads and preprocesses 20 samples from the Adult dataset
+Loads data from the UCI 'Adult' dataset.
 """
 function load_uci_adult_raw(n::Union{Nothing,Int}=1000)
     # Throw an exception if n < 1:

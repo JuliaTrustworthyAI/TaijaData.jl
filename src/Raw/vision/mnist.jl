@@ -1,7 +1,7 @@
 """
-    load_mnist()
+    load_mnist_raw(n::Union{Nothing,Int}=nothing)
 
-Loads and prepares MNIST data.
+Loads MNIST data.
 """
 function load_mnist_raw(n::Union{Nothing,Int}=nothing)
     X, y = MLDatasets.MNIST(:train)[:]
@@ -22,9 +22,9 @@ function load_mnist_raw(n::Union{Nothing,Int}=nothing)
 end
 
 """
-    load_mnist_test()
+    load_mnist_test_raw()
 
-Loads and prepares MNIST test data.
+Loads MNIST test data.
 """
 function load_mnist_test_raw()
     X, y = MLDatasets.MNIST(:test)[:]
