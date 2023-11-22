@@ -11,5 +11,7 @@ function load_circles_raw(n=250; seed=data_seed, noise=0.15, factor=0.01)
         X, y = MLJBase.make_circles(n; noise=noise, factor=factor)
     end
 
+    X = permutedims(MLJBase.matrix(X))
+
     return (X, y)
 end

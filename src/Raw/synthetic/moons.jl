@@ -11,5 +11,7 @@ function load_moons_raw(n=250; seed=data_seed, kwrgs...)
         X, y = MLJBase.make_moons(n; kwrgs...)
     end
 
+    X = permutedims(MLJBase.matrix(X))
+
     return (X, y)
 end
