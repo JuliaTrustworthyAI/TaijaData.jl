@@ -37,7 +37,6 @@ function load_german_credit_raw(n::Union{Nothing,Int}=nothing)
 
     # Counterfactual data:
     y = df.target
-    # counterfactual_data = CounterfactualExplanations.CounterfactualData(X, y)
 
     # Undersample:
     # if !isnothing(n)

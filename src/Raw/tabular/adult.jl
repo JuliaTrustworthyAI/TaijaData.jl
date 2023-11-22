@@ -53,7 +53,6 @@ function load_uci_adult_raw(n::Union{Nothing,Int}=1000)
     X = Float32.(X)
 
     y = df.target
-    # counterfactual_data = CounterfactualData(X, y)
 
     # # Undersample:
     # if !isnothing(n)
