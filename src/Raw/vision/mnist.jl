@@ -8,7 +8,7 @@ function load_mnist_raw(n::Union{Nothing,Int}=nothing)
     X = Flux.flatten(X)
     X = X .* 2.0f0 .- 1.0f0
     y = MLJBase.categorical(y)
-    y = CategoricalArrays.get.(y)
+    y = DataAPI.unwrap.(y)
     # counterfactual_data = CounterfactualExplanations.CounterfactualData(
     #     X, y; domain=(-1.0, 1.0), standardize=false
     # )
@@ -31,7 +31,7 @@ function load_mnist_test_raw()
     X = Flux.flatten(X)
     X = X .* 2.0f0 .- 1.0f0
     y = MLJBase.categorical(y)
-    y = CategoricalArrays.get.(y)
+    y = DataAPI.unwrap.(y)
     # counterfactual_data = CounterfactualExplanations.CounterfactualData(
     #     X, y; domain=(-1.0, 1.0)
     # )

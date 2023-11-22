@@ -18,7 +18,7 @@ function load_cifar_10_raw(n::Union{Nothing,Int}=nothing)
     X = Flux.flatten(X)
     X = X .* 2 .- 1 # normalization between [-1, 1]
     y = MLJBase.categorical(y)
-    y = CategoricalArrays.get.(y)
+    y = DataAPI.unwrap.(y)
     # counterfactual_data = CounterfactualExplanations.CounterfactualData(
     #     X, y; domain=(-1.0, 1.0), standardize=false
     # )
@@ -48,7 +48,7 @@ function load_cifar_10_test_raw()
     X = Flux.flatten(X)
     X = X .* 2 .- 1 # normalization between [-1, 1]
     y = MLJBase.categorical(y)
-    y = CategoricalArrays.get.(y)
+    y = DataAPI.unwrap.(y)
     # counterfactual_data = CounterfactualExplanations.CounterfactualData(
     #     X, y; domain=(-1.0, 1.0)
     # )

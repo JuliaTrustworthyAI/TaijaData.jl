@@ -12,7 +12,7 @@ function load_circles_raw(n=250; seed=data_seed, noise=0.15, factor=0.01)
     end
 
     X = permutedims(MLJBase.matrix(X))
-    y = CategoricalArrays.get.(y)
+    y = DataAPI.unwrap.(y)
 
     return (X, y)
 end

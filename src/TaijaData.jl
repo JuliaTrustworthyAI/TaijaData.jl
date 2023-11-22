@@ -1,6 +1,6 @@
 module TaijaData
 
-using CategoricalArrays
+using DataAPI
 using Random
 using LazyArtifacts
 # using CounterfactualExplanations
@@ -65,7 +65,7 @@ const data_catalogue_raw = Dict(
 Loads all synthetic datasets and wraps them in a dictionary.
 """
 function load_synthetic_data_raw(n=250; seed=data_seed, drop=nothing)
-    _dict = data_catalogue[:synthetic]
+    _dict = data_catalogue_raw[:synthetic]
     if !isnothing(drop)
         drop = drop isa Vector ? drop : [drop]
         @assert all(_drop in keys(_dict) for _drop in drop)
@@ -77,23 +77,23 @@ function load_synthetic_data_raw(n=250; seed=data_seed, drop=nothing)
     return data
 end
 
-# """
-#     load_tabular_data(n=nothing; drop=nothing)
+"""
+    load_tabular_data(n=nothing; drop=nothing)
 
-# Loads all tabular datasets and wraps them in a dictionary.
-# """
-# function load_tabular_data(n=nothing; drop=nothing)
-#     _dict = data_catalogue[:tabular]
-#     if !isnothing(drop)
-#         drop = drop isa Vector ? drop : [drop]
-#         @assert all(_drop in keys(_dict) for _drop in drop)
-#     else
-#         drop = []
-#     end
-#     _dict = filter(((k, v),) -> k ∉ drop, _dict)
-#     data = Dict(key => fun(n) for (key, fun) in _dict)
-#     return data
-# end
+Loads all tabular datasets and wraps them in a dictionary.
+"""
+function load_tabular_data_raw(n=nothing; drop=nothing)
+    _dict = data_catalogue_raw[:tabular]
+    if !isnothing(drop)
+        drop = drop isa Vector ? drop : [drop]
+        @assert all(_drop in keys(_dict) for _drop in drop)
+    else
+        drop = []
+    end
+    _dict = filter(((k, v),) -> k ∉ drop, _dict)
+    data = Dict(key => fun(n) for (key, fun) in _dict)
+    return data
+end
 
 export data_catalogue_raw
 export load_linearly_separable_raw, load_overlapping_raw, load_multi_class_raw
