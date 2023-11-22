@@ -4,7 +4,7 @@
 Loads linearly separable synthetic data.
 """
 function load_linearly_separable_raw(n=250; seed=data_seed)
-    raw_data = load_blobs(n; seed=seed, centers=2, cluster_std=0.5)
+    raw_data = load_blobs_raw(n; seed=seed, centers=2, cluster_std=0.5)
     
     return raw_data
 end

@@ -94,7 +94,7 @@ end
 #     return data
 # end
 
-# export data_catalogue
+export data_catalogue_raw
 export load_linearly_separable_raw, load_overlapping_raw, load_multi_class_raw
 export load_blobs_raw, load_circles_raw, load_moons_raw, load_multi_class_raw
 export load_synthetic_data_raw

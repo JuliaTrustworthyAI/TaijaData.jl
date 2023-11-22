@@ -1,7 +1,7 @@
 ENV["DATADEPS_ALWAYS_ACCEPT"] = "true"
 
 @testset "Construction" begin
-    for (name, loader) in merge(values(data_catalogue)...)
+    for (name, loader) in merge(values(data_catalogue_raw)...)
         @testset "$name" begin
             @test typeof(loader()) == CounterfactualExplanations.CounterfactualData
         end
