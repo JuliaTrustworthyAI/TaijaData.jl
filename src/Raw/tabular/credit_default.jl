@@ -3,7 +3,7 @@
 
 Loads and pre-processes UCI Credit Default data.
 """
-function load_credit_default(n::Union{Nothing,Int}=5000)
+function load_credit_default_raw(n::Union{Nothing,Int}=5000)
 
     # Load:
     df = CSV.read(joinpath(data_dir, "credit_default.csv"), DataFrames.DataFrame)
@@ -24,17 +24,17 @@ function load_credit_default(n::Union{Nothing,Int}=5000)
 
     # Counterfactual data:
     y = df.target
-    counterfactual_data = CounterfactualExplanations.CounterfactualData(
-        X, y; features_categorical=features_categorical
-    )
-    counterfactual_data.X = Float32.(counterfactual_data.X)
+    # counterfactual_data = CounterfactualExplanations.CounterfactualData(
+    #     X, y; features_categorical=features_categorical
+    # )
+    # counterfactual_data.X = Float32.(counterfactual_data.X)
 
     # Undersample:
-    if !isnothing(n)
-        counterfactual_data = CounterfactualExplanations.DataPreprocessing.subsample(
-            counterfactual_data, n
-        )
-    end
+    # if !isnothing(n)
+    #     counterfactual_data = CounterfactualExplanations.DataPreprocessing.subsample(
+    #         counterfactual_data, n
+    #     )
+    # end
 
-    return counterfactual_data
+    return (X, y)
 end

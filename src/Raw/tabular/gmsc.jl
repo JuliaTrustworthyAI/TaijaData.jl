@@ -3,7 +3,7 @@
 
 Loads and pre-processes Give Me Some Credit (GMSC) data.
 """
-function load_gmsc(n::Union{Nothing,Int}=5000)
+function load_gmsc_raw(n::Union{Nothing,Int}=5000)
 
     # Load:
     df = CSV.read(joinpath(data_dir, "gmsc.csv"), DataFrames.DataFrame)
@@ -17,15 +17,15 @@ function load_gmsc(n::Union{Nothing,Int}=5000)
 
     # Counterfactual data:
     y = df.target
-    counterfactual_data = CounterfactualExplanations.CounterfactualData(X, y)
-    counterfactual_data.X = Float32.(counterfactual_data.X)
+    # counterfactual_data = CounterfactualExplanations.CounterfactualData(X, y)
+    # counterfactual_data.X = Float32.(counterfactual_data.X)
 
     # Undersample:
-    if !isnothing(n)
-        counterfactual_data = CounterfactualExplanations.DataPreprocessing.subsample(
-            counterfactual_data, n
-        )
-    end
+    # if !isnothing(n)
+    #     counterfactual_data = CounterfactualExplanations.DataPreprocessing.subsample(
+    #         counterfactual_data, n
+    #     )
+    # end
 
-    return counterfactual_data
+    return (X, y)
 end

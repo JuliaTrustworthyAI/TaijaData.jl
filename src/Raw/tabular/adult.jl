@@ -12,7 +12,7 @@ Load and preprocesses data from the UCI 'Adult' dataset
 # Example
 data = load_uci_adult(20) # loads and preprocesses 20 samples from the Adult dataset
 """
-function load_uci_adult(n::Union{Nothing,Int}=1000)
+function load_uci_adult_raw(n::Union{Nothing,Int}=1000)
     # Throw an exception if n < 1:
     if !isnothing(n) && n < 1
         throw(ArgumentError("n must be >= 1"))
@@ -45,7 +45,7 @@ function load_uci_adult(n::Union{Nothing,Int}=1000)
     )
 
     # Preprocessing
-    transformer = Standardizer(; count=true)
+    transformer = MLJModels.Standardizer(; count=true)
     mach = MLJBase.fit!(machine(transformer, df[:, DataFrames.Not(:target)]))
     X = MLJBase.transform(mach, df[:, DataFrames.Not(:target)])
     X = Matrix(X)
@@ -53,14 +53,14 @@ function load_uci_adult(n::Union{Nothing,Int}=1000)
     X = Float32.(X)
 
     y = df.target
-    counterfactual_data = CounterfactualData(X, y)
+    # counterfactual_data = CounterfactualData(X, y)
 
-    # Undersample:
-    if !isnothing(n)
-        counterfactual_data = CounterfactualExplanations.DataPreprocessing.subsample(
-            counterfactual_data, n
-        )
-    end
+    # # Undersample:
+    # if !isnothing(n)
+    #     counterfactual_data = CounterfactualExplanations.DataPreprocessing.subsample(
+    #         counterfactual_data, n
+    #     )
+    # end
 
-    return counterfactual_data
+    return (X, y)
 end
