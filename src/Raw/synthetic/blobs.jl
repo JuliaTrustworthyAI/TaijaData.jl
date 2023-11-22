@@ -12,6 +12,7 @@ function load_blobs_raw(n=250; seed=data_seed, k=2, centers=2, kwrgs...)
     end
 
     X = permutedims(MLJBase.matrix(X))
+    y = CategoricalArrays.get.(y)
     
     return (X, y)
 end

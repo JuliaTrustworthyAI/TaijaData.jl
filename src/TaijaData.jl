@@ -1,5 +1,6 @@
 module TaijaData
 
+using CategoricalArrays
 using Random
 using LazyArtifacts
 # using CounterfactualExplanations
