@@ -1,5 +1,3 @@
-include("../utils.jl")
-
 """
     load_mnist()
 

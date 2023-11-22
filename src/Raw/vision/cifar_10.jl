@@ -1,5 +1,3 @@
-include("../utils.jl")
-
 """
     load_cifar_10(n::Union{Nothing, Int}=nothing)
 

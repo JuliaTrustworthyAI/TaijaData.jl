@@ -1,5 +1,3 @@
-include("../utils.jl")
-
 """
     load_california_housing(n::Union{Nothing,Int}=5000)
 

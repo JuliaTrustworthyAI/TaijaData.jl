@@ -1,5 +1,3 @@
-include("../utils.jl")
-
 """
     load_german_credit(n::Union{Nothing, Int}=nothing)
 

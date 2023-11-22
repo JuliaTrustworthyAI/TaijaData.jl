@@ -1,5 +1,3 @@
-include("../utils.jl")
-
 """
     load_uci_adult(n::Union{Nothing, Int}=1000)
 

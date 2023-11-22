@@ -1,5 +1,3 @@
-include("../utils.jl")
-
 """
     load_credit_default(n::Union{Nothing,Int}=5000)
 

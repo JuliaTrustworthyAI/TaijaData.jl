@@ -32,47 +32,49 @@ include("Raw/vision/cifar_10.jl")
 include("Raw/vision/fashion_mnist.jl")
 include("Raw/vision/mnist.jl")
 
-# "A dictionary that provides an overview of the various benchmark datasets and the methods to load them."
-# const data_catalogue = Dict(
-#     :synthetic => Dict(
-#         :linearly_separable => load_linearly_separable,
-#         :overlapping => load_overlapping,
-#         :multi_class => load_multi_class,
-#         :blobs => load_blobs,
-#         :moons => load_moons,
-#         :circles => load_circles,
-#     ),
-#     :tabular => Dict(
-#         :california_housing => load_california_housing,
-#         :credit_default => load_credit_default,
-#         :gmsc => load_gmsc,
-#         :german_credit => load_german_credit,
-#         :adult => load_uci_adult,
-#     ),
-#     :vision => Dict(
-#         :mnist => load_mnist,
-#         :fashion_mnist => load_fashion_mnist,
-#         :cifar_10 => load_cifar_10,
-#     ),
-# )
+include("Raw/utils.jl")
 
-# """
-#     load_synthetic_data(n=250; seed=data_seed)
+"A dictionary that provides an overview of the various benchmark datasets and the methods to load them."
+const data_catalogue_raw = Dict(
+    :synthetic => Dict(
+        :linearly_separable => load_linearly_separable_raw,
+        :overlapping => load_overlapping_raw,
+        :multi_class => load_multi_class_raw,
+        :blobs => load_blobs_raw,
+        :moons => load_moons_raw,
+        :circles => load_circles_raw,
+    ),
+    :tabular => Dict(
+        :california_housing => load_california_housing_raw,
+        :credit_default => load_credit_default_raw,
+        :gmsc => load_gmsc_raw,
+        :german_credit => load_german_credit_raw,
+        :adult => load_uci_adult_raw,
+    ),
+    :vision => Dict(
+        :mnist => load_mnist_raw,
+        :fashion_mnist => load_fashion_mnist_raw,
+        :cifar_10 => load_cifar_10_raw,
+    ),
+)
 
-# Loads all synthetic datasets and wraps them in a dictionary.
-# """
-# function load_synthetic_data(n=250; seed=data_seed, drop=nothing)
-#     _dict = data_catalogue[:synthetic]
-#     if !isnothing(drop)
-#         drop = drop isa Vector ? drop : [drop]
-#         @assert all(_drop in keys(_dict) for _drop in drop)
-#     else
-#         drop = []
-#     end
-#     _dict = filter(((k, v),) -> k ∉ [drop..., :blobs], _dict)
-#     data = Dict(key => fun(n; seed=seed) for (key, fun) in _dict)
-#     return data
-# end
+"""
+    load_synthetic_data(n=250; seed=data_seed)
+
+Loads all synthetic datasets and wraps them in a dictionary.
+"""
+function load_synthetic_data_raw(n=250; seed=data_seed, drop=nothing)
+    _dict = data_catalogue[:synthetic]
+    if !isnothing(drop)
+        drop = drop isa Vector ? drop : [drop]
+        @assert all(_drop in keys(_dict) for _drop in drop)
+    else
+        drop = []
+    end
+    _dict = filter(((k, v),) -> k ∉ [drop..., :blobs], _dict)
+    data = Dict(key => fun(n; seed=seed) for (key, fun) in _dict)
+    return data
+end
 
 # """
 #     load_tabular_data(n=nothing; drop=nothing)

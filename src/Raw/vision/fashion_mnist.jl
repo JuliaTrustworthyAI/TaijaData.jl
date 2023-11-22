@@ -1,5 +1,3 @@
-include("../utils.jl")
-
 """
     load_fashion_mnist(n::Union{Nothing,Int}=nothing)
 

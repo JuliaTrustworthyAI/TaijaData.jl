@@ -1,5 +1,3 @@
-include("../utils.jl")
-
 """
     load_gmsc(n::Union{Nothing,Int}=5000)
 
