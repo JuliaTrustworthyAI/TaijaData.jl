@@ -25,5 +25,4 @@ function subsample(X::AbstractMatrix, y::AbstractVector, n::Int)
 
     return (X, y)
 
-return (X, y)
 end
