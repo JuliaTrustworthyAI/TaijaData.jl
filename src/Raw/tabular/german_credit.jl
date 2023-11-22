@@ -1,3 +1,5 @@
+include("../utils.jl")
+
 """
     load_german_credit(n::Union{Nothing, Int}=nothing)
 
@@ -38,11 +40,9 @@ function load_german_credit_raw(n::Union{Nothing,Int}=nothing)
     y = df.target
 
     # Undersample:
-    # if !isnothing(n)
-    #     counterfactual_data = CounterfactualExplanations.DataPreprocessing.subsample(
-    #         counterfactual_data, n
-    #     )
-    # end
+    if !isnothing(n)
+        X, y = subsample(X, y, n)
+    end
 
     return (X, y)
 end

@@ -1,3 +1,5 @@
+include("../utils.jl")
+
 """
     load_california_housing(n::Union{Nothing,Int}=5000)
 
@@ -23,11 +25,9 @@ function load_california_housing_raw(n::Union{Nothing,Int}=5000)
     y = Int.(df.target)
 
     # Undersample:
-    # if !isnothing(n)
-    #     counterfactual_data = CounterfactualExplanations.DataPreprocessing.subsample(
-    #         counterfactual_data, n
-    #     )
-    # end
+    if !isnothing(n)
+        X, y = subsample(X, y, n)
+    end
     
     return (X, y)
 end

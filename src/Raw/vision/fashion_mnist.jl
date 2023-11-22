@@ -1,3 +1,5 @@
+include("../utils.jl")
+
 """
     load_fashion_mnist(n::Union{Nothing,Int}=nothing)
 
@@ -11,12 +13,12 @@ function load_fashion_mnist_raw(n::Union{Nothing,Int}=nothing)
     # counterfactual_data = CounterfactualExplanations.CounterfactualData(
     #     X, y; domain=(-1.0, 1.0), standardize=false
     # )
-    # # Undersample:
-    # if !isnothing(n)
-    #     counterfactual_data = CounterfactualExplanations.DataPreprocessing.subsample(
-    #         counterfactual_data, n
-    #     )
-    # end
+
+    # Undersample:
+    if !isnothing(n)
+        X, y = subsample(X, y, n)
+    end
+
     return (X, y)
 end
 

@@ -1,3 +1,5 @@
+include("../utils.jl")
+
 """
     load_uci_adult(n::Union{Nothing, Int}=1000)
 
@@ -53,12 +55,10 @@ function load_uci_adult_raw(n::Union{Nothing,Int}=1000)
 
     y = df.target
 
-    # # Undersample:
-    # if !isnothing(n)
-    #     counterfactual_data = CounterfactualExplanations.DataPreprocessing.subsample(
-    #         counterfactual_data, n
-    #     )
-    # end
+    # Undersample:
+    if !isnothing(n)
+        X, y = subsample(X, y, n)
+    end
 
     return (X, y)
 end

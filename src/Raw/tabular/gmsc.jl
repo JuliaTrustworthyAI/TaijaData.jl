@@ -1,3 +1,5 @@
+include("../utils.jl")
+
 """
     load_gmsc(n::Union{Nothing,Int}=5000)
 
@@ -19,11 +21,9 @@ function load_gmsc_raw(n::Union{Nothing,Int}=5000)
     y = df.target
 
     # Undersample:
-    # if !isnothing(n)
-    #     counterfactual_data = CounterfactualExplanations.DataPreprocessing.subsample(
-    #         counterfactual_data, n
-    #     )
-    # end
+    if !isnothing(n)
+        X, y = subsample(X, y, n)
+    end
 
     return (X, y)
 end

@@ -1,3 +1,5 @@
+include("../utils.jl")
+
 """
     load_credit_default(n::Union{Nothing,Int}=5000)
 
@@ -29,11 +31,9 @@ function load_credit_default_raw(n::Union{Nothing,Int}=5000)
     # )
 
     # Undersample:
-    # if !isnothing(n)
-    #     counterfactual_data = CounterfactualExplanations.DataPreprocessing.subsample(
-    #         counterfactual_data, n
-    #     )
-    # end
+    if !isnothing(n)
+        X, y = subsample(X, y, n)
+    end
 
     return (X, y)
 end

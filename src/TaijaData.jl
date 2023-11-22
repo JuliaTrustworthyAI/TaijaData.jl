@@ -10,6 +10,7 @@ using MLJModels
 # using CounterfactualExplanations.DataPreprocessing
 using Flux
 using MLDatasets
+using StatsBase
 
 const data_seed = 42
 data_dir = joinpath(artifact"data-tabular", "data-tabular")
