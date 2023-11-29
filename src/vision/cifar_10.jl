@@ -1,12 +1,12 @@
 """
-    load_mnist_raw(n::Union{Nothing,Int}=nothing)
+    load_cifar_10(n::Union{Nothing, Int}=nothing)
 
-Loads MNIST data.
+Loads data from the CIFAR-10 dataset.
 """
-function load_mnist_raw(n::Union{Nothing,Int}=nothing)
-    X, y = MLDatasets.MNIST(:train)[:]
+function load_cifar_10(n::Union{Nothing,Int}=nothing)
+    X, y = MLDatasets.CIFAR10()[:] # [:] gives us X, y
     X = Flux.flatten(X)
-    X = X .* 2.0f0 .- 1.0f0
+    X = X .* 2 .- 1 # normalization between [-1, 1]
     y = MLJBase.categorical(y)
     y = DataAPI.unwrap.(y)
     # counterfactual_data = CounterfactualExplanations.CounterfactualData(
@@ -17,19 +17,19 @@ function load_mnist_raw(n::Union{Nothing,Int}=nothing)
     if !isnothing(n)
         X, y = subsample(X, y, n)
     end
-
+    
     return (X, y)
 end
 
 """
-    load_mnist_test_raw()
+    load_cifar_10_test()
 
-Loads MNIST test data.
+Loads test data from the CIFAR-10 dataset.
 """
-function load_mnist_test_raw()
-    X, y = MLDatasets.MNIST(:test)[:]
+function load_cifar_10_test()
+    X, y = MLDatasets.CIFAR10(:test)[:]
     X = Flux.flatten(X)
-    X = X .* 2.0f0 .- 1.0f0
+    X = X .* 2 .- 1 # normalization between [-1, 1]
     y = MLJBase.categorical(y)
     y = DataAPI.unwrap.(y)
     # counterfactual_data = CounterfactualExplanations.CounterfactualData(

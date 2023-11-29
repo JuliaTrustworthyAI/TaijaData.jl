@@ -1,12 +1,12 @@
 """
-    load_cifar_10_raw(n::Union{Nothing, Int}=nothing)
+    load_fashion_mnist(n::Union{Nothing,Int}=nothing)
 
-Loads data from the CIFAR-10 dataset.
+Loads FashionMNIST data.
 """
-function load_cifar_10_raw(n::Union{Nothing,Int}=nothing)
-    X, y = MLDatasets.CIFAR10()[:] # [:] gives us X, y
+function load_fashion_mnist(n::Union{Nothing,Int}=nothing)
+    X, y = MLDatasets.FashionMNIST(:train)[:]
     X = Flux.flatten(X)
-    X = X .* 2 .- 1 # normalization between [-1, 1]
+    X = X .* 2.0f0 .- 1.0f0
     y = MLJBase.categorical(y)
     y = DataAPI.unwrap.(y)
     # counterfactual_data = CounterfactualExplanations.CounterfactualData(
@@ -17,19 +17,19 @@ function load_cifar_10_raw(n::Union{Nothing,Int}=nothing)
     if !isnothing(n)
         X, y = subsample(X, y, n)
     end
-    
+
     return (X, y)
 end
 
 """
-    load_cifar_10_test()
+    load_fashion_mnist_test()
 
-Loads test data from the CIFAR-10 dataset.
+Loads FashionMNIST test data.
 """
-function load_cifar_10_test_raw()
-    X, y = MLDatasets.CIFAR10(:test)[:]
+function load_fashion_mnist_test()
+    X, y = MLDatasets.FashionMNIST(:test)[:]
     X = Flux.flatten(X)
-    X = X .* 2 .- 1 # normalization between [-1, 1]
+    X = X .* 2.0f0 .- 1.0f0
     y = MLJBase.categorical(y)
     y = DataAPI.unwrap.(y)
     # counterfactual_data = CounterfactualExplanations.CounterfactualData(

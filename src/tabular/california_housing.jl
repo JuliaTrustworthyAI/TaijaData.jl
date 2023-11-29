@@ -1,13 +1,17 @@
 """
-    load_gmsc_raw(n::Union{Nothing,Int}=5000)
+    load_california_housing(n::Union{Nothing,Int}=5000)
 
-Loads Give Me Some Credit (GMSC) data.
+Loads California Housing data.
 """
-function load_gmsc_raw(n::Union{Nothing,Int}=5000)
+function load_california_housing(n::Union{Nothing,Int}=5000)
+
+    # check that n is > 0
+    if !isnothing(n) && n <= 0
+        throw(ArgumentError("n must be > 0"))
+    end
 
     # Load:
-    df = CSV.read(joinpath(data_dir, "gmsc.csv"), DataFrames.DataFrame)
-
+    df = CSV.read(joinpath(data_dir, "cal_housing.csv"), DataFrames.DataFrame)
     # Pre-process features:
     transformer = MLJModels.Standardizer(; count=true)
     mach = MLJBase.fit!(MLJBase.machine(transformer, df[:, DataFrames.Not(:target)]))
@@ -16,12 +20,12 @@ function load_gmsc_raw(n::Union{Nothing,Int}=5000)
     X = permutedims(X)
 
     # Counterfactual data:
-    y = df.target
+    y = Int.(df.target)
 
     # Undersample:
     if !isnothing(n)
         X, y = subsample(X, y, n)
     end
-
+    
     return (X, y)
 end

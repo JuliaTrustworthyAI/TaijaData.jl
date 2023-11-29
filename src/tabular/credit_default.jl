@@ -1,9 +1,9 @@
 """
-    load_credit_default_raw(n::Union{Nothing,Int}=5000)
+    load_credit_default(n::Union{Nothing,Int}=5000)
 
 Loads UCI Credit Default data.
 """
-function load_credit_default_raw(n::Union{Nothing,Int}=5000)
+function load_credit_default(n::Union{Nothing,Int}=5000)
 
     # Load:
     df = CSV.read(joinpath(data_dir, "credit_default.csv"), DataFrames.DataFrame)

@@ -1,9 +1,9 @@
 """
-    load_german_credit_raw(n::Union{Nothing, Int}=nothing)
+    load_german_credit(n::Union{Nothing, Int}=nothing)
 
 Loads UCI German Credit data.
 """
-function load_german_credit_raw(n::Union{Nothing,Int}=nothing)
+function load_german_credit(n::Union{Nothing,Int}=nothing)
     # Throw an exception if n > 1000:
     if !isnothing(n) && n > 1000
         throw(ArgumentError("n must be <= 1000"))

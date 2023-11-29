@@ -1,10 +1,10 @@
 """
-    load_fashion_mnist(n::Union{Nothing,Int}=nothing)
+    load_mnist(n::Union{Nothing,Int}=nothing)
 
-Loads FashionMNIST data.
+Loads MNIST data.
 """
-function load_fashion_mnist_raw(n::Union{Nothing,Int}=nothing)
-    X, y = MLDatasets.FashionMNIST(:train)[:]
+function load_mnist(n::Union{Nothing,Int}=nothing)
+    X, y = MLDatasets.MNIST(:train)[:]
     X = Flux.flatten(X)
     X = X .* 2.0f0 .- 1.0f0
     y = MLJBase.categorical(y)
@@ -22,12 +22,12 @@ function load_fashion_mnist_raw(n::Union{Nothing,Int}=nothing)
 end
 
 """
-    load_fashion_mnist_test()
+    load_mnist_test()
 
-Loads FashionMNIST test data.
+Loads MNIST test data.
 """
-function load_fashion_mnist_test_raw()
-    X, y = MLDatasets.FashionMNIST(:test)[:]
+function load_mnist_test()
+    X, y = MLDatasets.MNIST(:test)[:]
     X = Flux.flatten(X)
     X = X .* 2.0f0 .- 1.0f0
     y = MLJBase.categorical(y)

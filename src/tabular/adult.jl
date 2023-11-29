@@ -1,9 +1,9 @@
 """
-    load_uci_adult_raw(n::Union{Nothing, Int}=1000)
+    load_uci_adult(n::Union{Nothing, Int}=1000)
 
 Loads data from the UCI 'Adult' dataset.
 """
-function load_uci_adult_raw(n::Union{Nothing,Int}=1000)
+function load_uci_adult(n::Union{Nothing,Int}=1000)
     # Throw an exception if n < 1:
     if !isnothing(n) && n < 1
         throw(ArgumentError("n must be >= 1"))
