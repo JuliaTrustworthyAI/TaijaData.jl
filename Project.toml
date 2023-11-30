@@ -15,6 +15,7 @@ MLJModels = "d491faf4-2d78-11e9-2867-c94bc002c0b7"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [compat]
+MLJBase = "1"
 julia = "1"
 
 [extras]
