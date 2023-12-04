@@ -20,7 +20,7 @@ data_catalogue
 
 ### Choosing a Dataset
 
-Once you've reviewed the catalog, select a dataset, such as the `synthetic` dataset:
+Once you've reviewed the catalog, select a collection, such as the `synthetic` dataset collection:
 
 ```julia
 data_catalogue[:synthetic]
