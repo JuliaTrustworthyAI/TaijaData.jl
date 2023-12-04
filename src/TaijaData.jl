@@ -1,15 +1,15 @@
 module TaijaData
 
+using DataAPI
 using Random
 using LazyArtifacts
-using CounterfactualExplanations
 using MLJBase
 using CSV
 using DataFrames
 using MLJModels
-using CounterfactualExplanations.DataPreprocessing
 using Flux
 using MLDatasets
+using StatsBase
 
 const data_seed = 42
 data_dir = joinpath(artifact"data-tabular", "data-tabular")
@@ -30,6 +30,8 @@ include("tabular/german_credit.jl")
 include("vision/cifar_10.jl")
 include("vision/fashion_mnist.jl")
 include("vision/mnist.jl")
+
+include("utils.jl")
 
 "A dictionary that provides an overview of the various benchmark datasets and the methods to load them."
 const data_catalogue = Dict(
@@ -97,6 +99,7 @@ export load_blobs, load_circles, load_moons, load_multi_class
 export load_synthetic_data
 export load_california_housing, load_credit_default, load_gmsc
 export load_german_credit, load_uci_adult
+export load_uci_adult
 export load_tabular_data
 export load_mnist, load_mnist_test
 export load_fashion_mnist, load_fashion_mnist_test

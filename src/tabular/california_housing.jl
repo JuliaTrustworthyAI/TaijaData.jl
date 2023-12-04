@@ -1,7 +1,7 @@
 """
     load_california_housing(n::Union{Nothing,Int}=5000)
 
-Loads and pre-processes California Housing data.
+Loads California Housing data.
 """
 function load_california_housing(n::Union{Nothing,Int}=5000)
 
@@ -21,14 +21,11 @@ function load_california_housing(n::Union{Nothing,Int}=5000)
 
     # Counterfactual data:
     y = Int.(df.target)
-    counterfactual_data = CounterfactualExplanations.CounterfactualData(X, y)
-    counterfactual_data.X = Float32.(counterfactual_data.X)
 
     # Undersample:
     if !isnothing(n)
-        counterfactual_data = CounterfactualExplanations.DataPreprocessing.subsample(
-            counterfactual_data, n
-        )
+        X, y = subsample(X, y, n)
     end
-    return counterfactual_data
+    
+    return (X, y)
 end

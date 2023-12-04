@@ -5,14 +5,12 @@
         @testset "Check output types and sizes" begin
             result = load_california_housing(100)
 
-            @test isa(result, CounterfactualExplanations.CounterfactualData)  # the output should be a CounterfactualData object
+            @test isa(result, Tuple{Matrix, Vector})
 
-            @test eltype(result.X) == Float32  # the data should be of type Float32
-
-            @test size(result.X, 2) == 100  # there should be 100 observations
+            @test size(result[1], 2) == 100  # there should be 100 observations
 
             # Check that the dimensions of X and y match:
-            @test size(result.X, 2) == size(result.y, 2)
+            @test size(result[1], 2) == size(result[2], 1)
         end
 
         @testset "Check data consistency" begin
@@ -25,22 +23,22 @@
             result = load_california_housing(100)
 
             # Check that the dimension of X is correct:
-            @test size(result.X, 1) == X_dim_expected
+            @test size(result[1], 1) == X_dim_expected
         end
     end
 
     @testset "German credit statlog dataset" begin
         # Test loading german_credit dataset with default parameters
-        counterfactual_data = load_german_credit()
-        @test size(counterfactual_data.X)[2] == 1000
-        @test size(counterfactual_data.X)[1] == 20
-        @test size(counterfactual_data.y)[2] == 1000
+        data = load_german_credit()
+        @test size(data[1])[2] == 1000
+        @test size(data[1])[1] == 20
+        @test size(data[2])[1] == 1000
 
         # Test loading german_credit dataset with subsampled data
-        counterfactual_data = load_german_credit(500)
-        @test size(counterfactual_data.X)[2] == 500
-        @test size(counterfactual_data.X)[1] == 20
-        @test size(counterfactual_data.y)[2] == 500
+        data = load_german_credit(500)
+        @test size(data[1])[2] == 500
+        @test size(data[1])[1] == 20
+        @test size(data[2])[1] == 500
 
         # Test case: Load data with n > 1000, expecting an error
         @test_throws ArgumentError load_german_credit(1500)
@@ -51,15 +49,15 @@
     end
 
     @testset "UCI Adult dataset" begin
-        counterfactual_data = load_uci_adult()
-        @test size(counterfactual_data.X)[2] == 1000
-        @test size(counterfactual_data.X)[1] == 14
-        @test size(counterfactual_data.y)[2] == 1000
+        data = load_uci_adult()
+        @test size(data[1])[2] == 1000
+        @test size(data[1])[1] == 14
+        @test size(data[2])[1] == 1000
 
-        counterfactual_data = load_uci_adult(500)
-        @test size(counterfactual_data.X)[2] == 500
-        @test size(counterfactual_data.X)[1] == 14
-        @test size(counterfactual_data.y)[2] == 500
+        data = load_uci_adult(500)
+        @test size(data[1])[2] == 500
+        @test size(data[1])[1] == 14
+        @test size(data[2])[1] == 500
 
         @test_throws ArgumentError load_uci_adult(50000)
         @test_throws ArgumentError load_uci_adult(0)

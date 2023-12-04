@@ -1,39 +1,39 @@
 """
-    load_mnist()
+    load_mnist(n::Union{Nothing,Int}=nothing)
 
-Loads and prepares MNIST data.
+Loads MNIST data.
 """
 function load_mnist(n::Union{Nothing,Int}=nothing)
     X, y = MLDatasets.MNIST(:train)[:]
     X = Flux.flatten(X)
     X = X .* 2.0f0 .- 1.0f0
     y = MLJBase.categorical(y)
-    counterfactual_data = CounterfactualExplanations.CounterfactualData(
-        X, y; domain=(-1.0, 1.0), standardize=false
-    )
-    counterfactual_data.X = Float32.(counterfactual_data.X)
+    y = DataAPI.unwrap.(y)
+    # counterfactual_data = CounterfactualExplanations.CounterfactualData(
+    #     X, y; domain=(-1.0, 1.0), standardize=false
+    # )
+
     # Undersample:
     if !isnothing(n)
-        counterfactual_data = CounterfactualExplanations.DataPreprocessing.subsample(
-            counterfactual_data, n
-        )
+        X, y = subsample(X, y, n)
     end
-    return counterfactual_data
+
+    return (X, y)
 end
 
 """
     load_mnist_test()
 
-Loads and prepares MNIST test data.
+Loads MNIST test data.
 """
 function load_mnist_test()
     X, y = MLDatasets.MNIST(:test)[:]
     X = Flux.flatten(X)
     X = X .* 2.0f0 .- 1.0f0
     y = MLJBase.categorical(y)
-    counterfactual_data = CounterfactualExplanations.CounterfactualData(
-        X, y; domain=(-1.0, 1.0)
-    )
-    counterfactual_data.X = Float32.(counterfactual_data.X)
-    return counterfactual_data
+    y = DataAPI.unwrap.(y)
+    # counterfactual_data = CounterfactualExplanations.CounterfactualData(
+    #     X, y; domain=(-1.0, 1.0)
+    # )
+    return (X, y)
 end
