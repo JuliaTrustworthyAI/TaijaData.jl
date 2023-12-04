@@ -1,16 +1,7 @@
 """
     load_uci_adult(n::Union{Nothing, Int}=1000)
 
-Load and preprocesses data from the UCI 'Adult' dataset
-
-# Arguments
-- `n::Union{Nothing, Int}=nothing`: The number of samples to subsample from the dataset.
-
-# Returns
-- `counterfactual_data::CounterfactualData`: A `CounterfactualData` object containing the preprocessed data.
-
-# Example
-data = load_uci_adult(20) # loads and preprocesses 20 samples from the Adult dataset
+Loads data from the UCI 'Adult' dataset.
 """
 function load_uci_adult(n::Union{Nothing,Int}=1000)
     # Throw an exception if n < 1:
@@ -45,22 +36,18 @@ function load_uci_adult(n::Union{Nothing,Int}=1000)
     )
 
     # Preprocessing
-    transformer = Standardizer(; count=true)
+    transformer = MLJModels.Standardizer(; count=true)
     mach = MLJBase.fit!(machine(transformer, df[:, DataFrames.Not(:target)]))
     X = MLJBase.transform(mach, df[:, DataFrames.Not(:target)])
     X = Matrix(X)
     X = permutedims(X)
-    X = Float32.(X)
 
     y = df.target
-    counterfactual_data = CounterfactualData(X, y)
 
     # Undersample:
     if !isnothing(n)
-        counterfactual_data = CounterfactualExplanations.DataPreprocessing.subsample(
-            counterfactual_data, n
-        )
+        X, y = subsample(X, y, n)
     end
 
-    return counterfactual_data
+    return (X, y)
 end

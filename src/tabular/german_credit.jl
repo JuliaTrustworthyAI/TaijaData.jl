@@ -1,17 +1,7 @@
 """
     load_german_credit(n::Union{Nothing, Int}=nothing)
 
-Loads and pre-processes UCI German Credit data.
-
-# Arguments
-- `n::Union{Nothing, Int}=nothing`: The number of samples to subsample from the dataset. If `n` is not specified, all samples will be used. Must be <= 1000 and >= 1.
-
-# Returns
-- `counterfactual_data::CounterfactualData`: A `CounterfactualData` object containing the preprocessed data.
-
-# Example
-data = load_german_credit(500) # loads and preprocesses 500 samples from the German Credit dataset
-
+Loads UCI German Credit data.
 """
 function load_german_credit(n::Union{Nothing,Int}=nothing)
     # Throw an exception if n > 1000:
@@ -33,18 +23,14 @@ function load_german_credit(n::Union{Nothing,Int}=nothing)
     X = MLJBase.transform(mach, df[:, DataFrames.Not(:target)])
     X = Matrix(X)
     X = permutedims(X)
-    X = Float32.(X)
 
     # Counterfactual data:
     y = df.target
-    counterfactual_data = CounterfactualExplanations.CounterfactualData(X, y)
 
     # Undersample:
     if !isnothing(n)
-        counterfactual_data = CounterfactualExplanations.DataPreprocessing.subsample(
-            counterfactual_data, n
-        )
+        X, y = subsample(X, y, n)
     end
 
-    return counterfactual_data
+    return (X, y)
 end
