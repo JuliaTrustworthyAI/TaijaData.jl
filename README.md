@@ -2,8 +2,8 @@
 
 [![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://JuliaTrustworthyAI.github.io/TaijaData.jl/stable/)
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://JuliaTrustworthyAI.github.io/TaijaData.jl/dev/)
-[![Build Status](https://github.com/JuliaTrustworthyAI/TaijaData.jl/actions/workflows/CI.yml/badge.svg?branch=master)](https://github.com/JuliaTrustworthyAI/TaijaData.jl/actions/workflows/CI.yml?query=branch%3Amaster)
-[![Coverage](https://codecov.io/gh/JuliaTrustworthyAI/TaijaData.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/JuliaTrustworthyAI/TaijaData.jl)
+[![Build Status](https://github.com/JuliaTrustworthyAI/TaijaData.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/JuliaTrustworthyAI/TaijaData.jl/actions/workflows/CI.yml?query=branch%3Amain)
+[![Coverage](https://codecov.io/gh/JuliaTrustworthyAI/TaijaData.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/JuliaTrustworthyAI/TaijaData.jl)
 [![Code Style: Blue](https://img.shields.io/badge/code%20style-blue-4495d1.svg)](https://github.com/invenia/BlueStyle)
 
 TaijaData is a package designed to simplify the process of fetching data for training and testing AI models.
