@@ -1,7 +1,7 @@
 name = "TaijaData"
 uuid = "9d524318-b4e6-4a65-86d2-b2b72d07866c"
 authors = ["Patrick Altmeyer"]
-version = "1.0.0-DEV"
+version = "0.1.0"
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
@@ -17,7 +17,15 @@ Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 
 [compat]
-julia = "1"
+CSV = "0.10"
+CounterfactualExplanations = "0.1"
+DataFrames = "1"
+Flux = "0.12, 0.13, 0.14"
+LazyArtifacts = "1"
+MLDatasets = "0.7"
+MLJBase = "0.21, 1"
+MLJModels = "0.16"
+julia = "1.6, 1.7, 1.8, 1.9"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
