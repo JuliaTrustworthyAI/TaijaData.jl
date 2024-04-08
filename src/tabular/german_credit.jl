@@ -25,7 +25,7 @@ function load_german_credit(n::Union{Nothing,Int}=nothing)
     X = permutedims(X)
 
     # Counterfactual data:
-    y = df.target
+    y = convert(Vector,df.target)
 
     # Undersample:
     if !isnothing(n)

@@ -1,4 +1,3 @@
-using CounterfactualExplanations
 using TaijaData
 using Test
 

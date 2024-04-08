@@ -5,7 +5,7 @@ using TaijaData
 @testset "Construction" begin
     for (name, loader) in merge(values(data_catalogue)...)
         @testset "$name" begin
-            @test isa(loader(), Tuple{Matrix, Vector})
+            @test isa(loader(), Tuple{<:Matrix,<:Vector})
         end
     end
 end
