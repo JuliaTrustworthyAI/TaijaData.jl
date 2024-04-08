@@ -1,3 +1,5 @@
+using TaijaData
+
 @testset "Vision tests" begin
     # Test loading CIFAR10 dataset with default parameters
     @testset "cifar 10" begin

@@ -1,5 +1,7 @@
 ENV["DATADEPS_ALWAYS_ACCEPT"] = "true"
 
+using TaijaData
+
 @testset "Construction" begin
     for (name, loader) in merge(values(data_catalogue)...)
         @testset "$name" begin

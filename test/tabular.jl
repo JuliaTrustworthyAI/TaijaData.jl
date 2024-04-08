@@ -1,3 +1,5 @@
+using TaijaData
+
 @testset "Tabular tests" begin
     @testset "load_california_housing tests" begin
         @test_throws ArgumentError load_california_housing(-1)  # n must be a positive integer or Nothing
