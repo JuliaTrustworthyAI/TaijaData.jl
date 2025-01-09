@@ -26,6 +26,6 @@ function load_california_housing(n::Union{Nothing,Int}=5000)
     if !isnothing(n)
         X, y = subsample(X, y, n)
     end
-    
+
     return (X, y)
 end

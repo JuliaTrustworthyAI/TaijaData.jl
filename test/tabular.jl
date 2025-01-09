@@ -7,7 +7,7 @@ using TaijaData
         @testset "Check output types and sizes" begin
             result = load_california_housing(100)
 
-            @test isa(result, Tuple{Matrix, Vector})
+            @test isa(result, Tuple{Matrix,Vector})
 
             @test size(result[1], 2) == 100  # there should be 100 observations
 

@@ -14,12 +14,7 @@ makedocs(;
         edit_link="master",
         assets=String[],
     ),
-    pages=[
-        "Home" => "index.md",
-    ],
+    pages=["Home" => "index.md"],
 )
 
-deploydocs(;
-    repo="github.com/JuliaTrustworthyAI/TaijaData.jl",
-    devbranch="master",
-)
+deploydocs(; repo="github.com/JuliaTrustworthyAI/TaijaData.jl", devbranch="master")

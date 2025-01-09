@@ -24,5 +24,4 @@ function subsample(X::AbstractMatrix, y::AbstractVector, n::Int)
     y = y[idx]
 
     return (X, y)
-
 end

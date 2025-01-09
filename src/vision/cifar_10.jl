@@ -17,7 +17,7 @@ function load_cifar_10(n::Union{Nothing,Int}=nothing)
     if !isnothing(n)
         X, y = subsample(X, y, n)
     end
-    
+
     return (X, y)
 end
 
