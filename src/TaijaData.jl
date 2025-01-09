@@ -11,7 +11,7 @@ using Flux
 using MLDatasets
 using StatsBase
 
-const data_seed = Random.default_rng()
+const data_seed = 42
 data_dir = joinpath(artifact"data-tabular", "data-tabular")
 
 include("synthetic/blobs.jl")
