@@ -11,7 +11,13 @@ using Flux
 using MLDatasets
 using StatsBase
 
+"""
+    data_seed
+
+A global seed to produce standardized synthetic data. This seed is used in various functions to ensure reproducibility of the synthetic datasets.
+"""
 const data_seed = 42
+
 data_dir = joinpath(artifact"data-tabular", "data-tabular")
 
 include("synthetic/blobs.jl")
