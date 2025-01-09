@@ -7,7 +7,6 @@ function load_circles(n=250; seed=data_seed, noise=0.15, factor=0.01)
     if isa(seed, Random.AbstractRNG)
         X, y = MLJBase.make_circles(n; rng=seed, noise=noise, factor=factor)
     else
-        Random.seed!(seed)
         X, y = MLJBase.make_circles(n; noise=noise, factor=factor)
     end
 
