@@ -26,17 +26,16 @@ end
             @test size(dataset[1])[2] == 1000  # replace ... with actual size of your data
         end
     end
-    
+
     @testset "load_synthetic_data tests" begin
-            # Test dropping a specific dataset
-            data = TaijaData.load_synthetic_data(; drop=:linearly_separable)
-            @test !haskey(data, :linearly_separable)
-    
-            # Test loading with specified number of samples
-            data = TaijaData.load_synthetic_data(500)
-            for dataset in values(data)
-                @test size(dataset[1])[2] == 500  # replace ... with actual size of your data
-            end
+        # Test dropping a specific dataset
+        data = TaijaData.load_synthetic_data(; drop=:linearly_separable)
+        @test !haskey(data, :linearly_separable)
+
+        # Test loading with specified number of samples
+        data = TaijaData.load_synthetic_data(500)
+        for dataset in values(data)
+            @test size(dataset[1])[2] == 500  # replace ... with actual size of your data
         end
+    end
 end
-        
