@@ -1,9 +1,9 @@
 """
-    load_uci_adult(n::Union{Nothing, Int}=1000)
+    load_uci_adult(n::Union{Nothing,Int}=1000; seed=data_seed)
 
 Loads data from the UCI 'Adult' dataset.
 """
-function load_uci_adult(n::Union{Nothing,Int}=1000)
+function load_uci_adult(n::Union{Nothing,Int}=1000; seed=data_seed)
     # Throw an exception if n < 1:
     if !isnothing(n) && n < 1
         throw(ArgumentError("n must be >= 1"))
@@ -44,9 +44,10 @@ function load_uci_adult(n::Union{Nothing,Int}=1000)
 
     y = df.target
 
-    # Undersample:
-    if !isnothing(n)
-        X, y = subsample(X, y, n)
+    # Randomly under-/over-sample:
+    rng = get_rng(seed)
+    if !isnothing(n) && n != size(X)[2]
+        X, y = subsample(rng, X, y, n)
     end
 
     return (X, y)

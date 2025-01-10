@@ -1,9 +1,9 @@
 """
-    load_german_credit(n::Union{Nothing, Int}=nothing)
+    load_german_credit(n::Union{Nothing,Int}=nothing; seed=data_seed)
 
 Loads UCI German Credit data.
 """
-function load_german_credit(n::Union{Nothing,Int}=nothing)
+function load_german_credit(n::Union{Nothing,Int}=nothing; seed=data_seed)
     # Throw an exception if n > 1000:
     if !isnothing(n) && n > 1000
         throw(ArgumentError("n must be <= 1000"))
@@ -27,9 +27,10 @@ function load_german_credit(n::Union{Nothing,Int}=nothing)
     # Counterfactual data:
     y = convert(Vector, df.target)
 
-    # Undersample:
-    if !isnothing(n)
-        X, y = subsample(X, y, n)
+    # Randomly under-/over-sample:
+    rng = get_rng(seed)
+    if !isnothing(n) && n != size(X)[2]
+        X, y = subsample(rng, X, y, n)
     end
 
     return (X, y)

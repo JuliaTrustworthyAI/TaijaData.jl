@@ -1,4 +1,18 @@
-function subsample(X::AbstractMatrix, y::AbstractVector, n::Int)
+using Random
+
+"""
+    get_rng(seed::Union{Int,AbstractRNG})
+
+Returns a random number generator based on the provided seed, if seed is an integer, or returns the seed itself if it's already an `AbstractRNG`.
+"""
+function get_rng(seed::Union{Int,AbstractRNG})
+    if isa(seed, Int)
+        seed = Xoshiro(seed)
+    end
+    return seed
+end
+
+function subsample(rng::AbstractRNG, X::AbstractMatrix, y::AbstractVector, n::Int)
     # Get the unique classes in `y`.
     classes_ = unique(y)
 
@@ -13,7 +27,7 @@ function subsample(X::AbstractMatrix, y::AbstractVector, n::Int)
         reduce(
             vcat,
             [
-                StatsBase.sample(findall(y .== cls), n_per_class; replace=true) for
+                StatsBase.sample(rng, findall(y .== cls), n_per_class; replace=true) for
                 cls in classes_
             ],
         ),

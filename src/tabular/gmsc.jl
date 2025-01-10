@@ -1,9 +1,9 @@
 """
-    load_gmsc(n::Union{Nothing,Int}=5000)
+    load_gmsc(n::Union{Nothing,Int}=5000; seed=data_seed)
 
 Loads Give Me Some Credit (GMSC) data.
 """
-function load_gmsc(n::Union{Nothing,Int}=5000)
+function load_gmsc(n::Union{Nothing,Int}=5000; seed=data_seed)
 
     # Load:
     df = CSV.read(joinpath(data_dir, "gmsc.csv"), DataFrames.DataFrame)
@@ -18,9 +18,10 @@ function load_gmsc(n::Union{Nothing,Int}=5000)
     # Counterfactual data:
     y = df.target
 
-    # Undersample:
-    if !isnothing(n)
-        X, y = subsample(X, y, n)
+    # Randomly under-/over-sample:
+    rng = get_rng(seed)
+    if !isnothing(n) && n != size(X)[2]
+        X, y = subsample(rng, X, y, n)
     end
 
     return (X, y)

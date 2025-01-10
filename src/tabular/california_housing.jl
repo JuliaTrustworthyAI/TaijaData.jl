@@ -1,9 +1,9 @@
 """
-    load_california_housing(n::Union{Nothing,Int}=5000)
+    load_california_housing(n::Union{Nothing,Int}=5000; seed=data_seed)
 
 Loads California Housing data.
 """
-function load_california_housing(n::Union{Nothing,Int}=5000)
+function load_california_housing(n::Union{Nothing,Int}=5000; seed=data_seed)
 
     # check that n is > 0
     if !isnothing(n) && n <= 0
@@ -22,9 +22,10 @@ function load_california_housing(n::Union{Nothing,Int}=5000)
     # Counterfactual data:
     y = Int.(df.target)
 
-    # Undersample:
-    if !isnothing(n)
-        X, y = subsample(X, y, n)
+    # Randomly under-/over-sample:
+    rng = get_rng(seed)
+    if !isnothing(n) && n != size(X)[2]
+        X, y = subsample(rng, X, y, n)
     end
 
     return (X, y)
