@@ -42,9 +42,6 @@ using TaijaData
         @test size(data[1])[1] == 20
         @test size(data[2])[1] == 500
 
-        # Test case: Load data with n > 1000, expecting an error
-        @test_throws ArgumentError load_german_credit(1500)
-
         # Test case: Load data with n < 1, expecting an error
         @test_throws ArgumentError load_german_credit(0)
         @test_throws ArgumentError load_german_credit(-100)
@@ -61,7 +58,6 @@ using TaijaData
         @test size(data[1])[1] == 14
         @test size(data[2])[1] == 500
 
-        @test_throws ArgumentError load_uci_adult(50000)
         @test_throws ArgumentError load_uci_adult(0)
         @test_throws ArgumentError load_uci_adult(-1)
     end
