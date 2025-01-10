@@ -1,7 +1,7 @@
 name = "TaijaData"
 uuid = "9d524318-b4e6-4a65-86d2-b2b72d07866c"
 authors = ["Patrick Altmeyer"]
-version = "1.1.1"
+version = "1.1.2"
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
