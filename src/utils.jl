@@ -18,7 +18,6 @@ function request_more_than_available(nreq, navailable)
     end
 end
 
-
 function ensure_positive(n::Union{Nothing,Int})
     if !isnothing(n) && n < 1
         throw(ArgumentError("`n` must be >= 1"))

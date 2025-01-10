@@ -7,7 +7,7 @@ function load_mnist(n::Union{Nothing,Int}=nothing; seed=data_seed)
 
     # Assertions:
     ensure_positive(n)
-    
+
     X, y = MLDatasets.MNIST(:train)[:]
     X = Flux.flatten(X)
     X = X .* 2.0f0 .- 1.0f0

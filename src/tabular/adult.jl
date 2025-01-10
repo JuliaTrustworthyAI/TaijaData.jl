@@ -40,7 +40,7 @@ function load_uci_adult(n::Union{Nothing,Int}=1000; seed=data_seed)
     y = df.target
 
     # Checks and warnings
-    request_more_than_available(n, size(X,2))
+    request_more_than_available(n, size(X, 2))
 
     # Randomly under-/over-sample:
     rng = get_rng(seed)
