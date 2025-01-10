@@ -1,9 +1,9 @@
 """
-    load_cifar_10(n::Union{Nothing, Int}=nothing)
+    load_cifar_10(n::Union{Nothing, Int}=nothing; seed=data_seed)
 
 Loads data from the CIFAR-10 dataset.
 """
-function load_cifar_10(n::Union{Nothing,Int}=nothing)
+function load_cifar_10(n::Union{Nothing,Int}=nothing; seed=data_seed)
     X, y = MLDatasets.CIFAR10()[:] # [:] gives us X, y
     X = Flux.flatten(X)
     X = X .* 2 .- 1 # normalization between [-1, 1]
@@ -13,9 +13,10 @@ function load_cifar_10(n::Union{Nothing,Int}=nothing)
     #     X, y; domain=(-1.0, 1.0), standardize=false
     # )
 
-    # Undersample:
-    if !isnothing(n)
-        X, y = subsample(X, y, n)
+    # Randomly under-/over-sample:
+    rng = get_rng(seed)
+    if !isnothing(n) && n != size(X)[2]
+        X, y = subsample(rng, X, y, n)
     end
 
     return (X, y)

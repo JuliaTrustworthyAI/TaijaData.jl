@@ -1,9 +1,9 @@
 """
-    load_credit_default(n::Union{Nothing,Int}=5000)
+    load_credit_default(n::Union{Nothing,Int}=5000; seed=data_seed)
 
 Loads UCI Credit Default data.
 """
-function load_credit_default(n::Union{Nothing,Int}=5000)
+function load_credit_default(n::Union{Nothing,Int}=5000; seed=data_seed)
 
     # Load:
     df = CSV.read(joinpath(data_dir, "credit_default.csv"), DataFrames.DataFrame)
@@ -28,9 +28,10 @@ function load_credit_default(n::Union{Nothing,Int}=5000)
     #     X, y; features_categorical=features_categorical
     # )
 
-    # Undersample:
-    if !isnothing(n)
-        X, y = subsample(X, y, n)
+    # Randomly under-/over-sample:
+    rng = get_rng(seed)
+    if !isnothing(n) && n != size(X)[2]
+        X, y = subsample(rng, X, y, n)
     end
 
     return (X, y)

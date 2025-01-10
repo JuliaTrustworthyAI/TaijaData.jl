@@ -6,7 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 *Note*: We try to adhere to these practices as of version [v1.0.1].
 
-## Version [1.0.1] - 2025-01-09
+## Version [1.1.1] - 2025-01-10
+
+### Changed
+
+- Improved seeding behaviour for tabular and vision datasets. 
+
+## Version [1.1.0] - 2025-01-09
 
 ### Changed
 

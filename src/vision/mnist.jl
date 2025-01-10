@@ -1,9 +1,9 @@
 """
-    load_mnist(n::Union{Nothing,Int}=nothing)
+    load_mnist(n::Union{Nothing,Int}=nothing; seed=data_seed)
 
 Loads MNIST data.
 """
-function load_mnist(n::Union{Nothing,Int}=nothing)
+function load_mnist(n::Union{Nothing,Int}=nothing; seed=data_seed)
     X, y = MLDatasets.MNIST(:train)[:]
     X = Flux.flatten(X)
     X = X .* 2.0f0 .- 1.0f0
@@ -13,9 +13,10 @@ function load_mnist(n::Union{Nothing,Int}=nothing)
     #     X, y; domain=(-1.0, 1.0), standardize=false
     # )
 
-    # Undersample:
-    if !isnothing(n)
-        X, y = subsample(X, y, n)
+    # Randomly under-/over-sample:
+    rng = get_rng(seed)
+    if !isnothing(n) && n != size(X)[2]
+        X, y = subsample(rng, X, y, n)
     end
 
     return (X, y)
