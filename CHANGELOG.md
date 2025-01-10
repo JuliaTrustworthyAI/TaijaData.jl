@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
-- Improved seeding behaviour for tabular and vision datasets. 
+- Improved seeding behaviour for tabular and vision datasets. [#28]
 
 ## Version [1.1.0] - 2025-01-09
 
