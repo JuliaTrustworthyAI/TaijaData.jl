@@ -4,13 +4,9 @@
 Loads data from the UCI 'Adult' dataset.
 """
 function load_uci_adult(n::Union{Nothing,Int}=1000; seed=data_seed)
-    # Throw an exception if n < 1:
-    if !isnothing(n) && n < 1
-        throw(ArgumentError("n must be >= 1"))
-    end
-    if !isnothing(n) && n > 32000
-        throw(ArgumentError("n must not exceed size of dataset (<=32000)"))
-    end
+
+    # Assertions:
+    ensure_positive(n)
 
     # Load data
     df = CSV.read(joinpath(data_dir, "adult.csv"), DataFrames.DataFrame)
@@ -41,8 +37,10 @@ function load_uci_adult(n::Union{Nothing,Int}=1000; seed=data_seed)
     X = MLJBase.transform(mach, df[:, DataFrames.Not(:target)])
     X = Matrix(X)
     X = permutedims(X)
-
     y = df.target
+
+    # Checks and warnings
+    request_more_than_available(n, size(X,2))
 
     # Randomly under-/over-sample:
     rng = get_rng(seed)
