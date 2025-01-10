@@ -4,7 +4,7 @@
 Loads California Housing data.
 """
 function load_california_housing(n::Union{Nothing,Int}=5000; seed=data_seed)
-    
+
     # check that n is > 0
     if !isnothing(n) && n <= 0
         throw(ArgumentError("n must be > 0"))
