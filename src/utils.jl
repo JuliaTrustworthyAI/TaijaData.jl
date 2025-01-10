@@ -12,6 +12,18 @@ function get_rng(seed::Union{Int,AbstractRNG})
     return seed
 end
 
+function request_more_than_available(nreq, navailable)
+    if !isnothing(nreq) && nreq > navailable
+        @warn "Requested $nreq samples but only $navailable are available. Will resort to random oversampling."
+    end
+end
+
+function ensure_positive(n::Union{Nothing,Int})
+    if !isnothing(n) && n < 1
+        throw(ArgumentError("`n` must be >= 1"))
+    end
+end
+
 function subsample(rng::AbstractRNG, X::AbstractMatrix, y::AbstractVector, n::Int)
     # Get the unique classes in `y`.
     classes_ = unique(y)

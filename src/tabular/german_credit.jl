@@ -4,15 +4,9 @@
 Loads UCI German Credit data.
 """
 function load_german_credit(n::Union{Nothing,Int}=nothing; seed=data_seed)
-    # Throw an exception if n > 1000:
-    if !isnothing(n) && n > 1000
-        throw(ArgumentError("n must be <= 1000"))
-    end
 
-    # Throw an exception if n < 1:
-    if !isnothing(n) && n < 1
-        throw(ArgumentError("n must be >= 1"))
-    end
+    # Assertions:
+    ensure_positive(n)
 
     # Load:
     df = CSV.read(joinpath(data_dir, "german_credit.csv"), DataFrames.DataFrame)
@@ -26,6 +20,9 @@ function load_german_credit(n::Union{Nothing,Int}=nothing; seed=data_seed)
 
     # Counterfactual data:
     y = convert(Vector, df.target)
+
+    # Checks and warnings
+    request_more_than_available(n, size(X, 2))
 
     # Randomly under-/over-sample:
     rng = get_rng(seed)

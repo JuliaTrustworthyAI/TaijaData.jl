@@ -5,6 +5,9 @@ Loads UCI Credit Default data.
 """
 function load_credit_default(n::Union{Nothing,Int}=5000; seed=data_seed)
 
+    # Assertions:
+    ensure_positive(n)
+
     # Load:
     df = CSV.read(joinpath(data_dir, "credit_default.csv"), DataFrames.DataFrame)
 
@@ -27,6 +30,9 @@ function load_credit_default(n::Union{Nothing,Int}=5000; seed=data_seed)
     # counterfactual_data = CounterfactualExplanations.CounterfactualData(
     #     X, y; features_categorical=features_categorical
     # )
+
+    # Checks and warnings
+    request_more_than_available(n, size(X, 2))
 
     # Randomly under-/over-sample:
     rng = get_rng(seed)

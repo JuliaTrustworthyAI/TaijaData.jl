@@ -5,10 +5,8 @@ Loads California Housing data.
 """
 function load_california_housing(n::Union{Nothing,Int}=5000; seed=data_seed)
 
-    # check that n is > 0
-    if !isnothing(n) && n <= 0
-        throw(ArgumentError("n must be > 0"))
-    end
+    # Assertions:
+    ensure_positive(n)
 
     # Load:
     df = CSV.read(joinpath(data_dir, "cal_housing.csv"), DataFrames.DataFrame)
@@ -21,6 +19,9 @@ function load_california_housing(n::Union{Nothing,Int}=5000; seed=data_seed)
 
     # Counterfactual data:
     y = Int.(df.target)
+
+    # Checks and warnings
+    request_more_than_available(n, size(X, 2))
 
     # Randomly under-/over-sample:
     rng = get_rng(seed)
