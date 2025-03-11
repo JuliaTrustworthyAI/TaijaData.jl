@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 *Note*: We try to adhere to these practices as of version [v1.0.1].
 
+## Version [1.1.3] - 2025-03-11
+
+### Changed
+
+- Ensure that *Adult* data is properly pre-processed (i.e. categorical variables are one-hot encoded). [#30]
+
+### Added
+
+- Helper function `format_header!(df::DataFrame)` to apply some standard formatting to column names. [#30]
+- Added option `return_cats::Bool` where applicable to allow users to retrieve the indices of categorical features. [#30]
+
 ## Version [1.1.2] - 2025-01-10
 
 ### Changed

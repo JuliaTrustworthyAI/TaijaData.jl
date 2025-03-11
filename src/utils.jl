@@ -51,3 +51,21 @@ function subsample(rng::AbstractRNG, X::AbstractMatrix, y::AbstractVector, n::In
 
     return (X, y)
 end
+
+"""
+    format_header!(df::DataFrame)
+
+Helper function to apply some standard formatting to headers.
+"""
+function format_header!(df::DataFrame)
+    return DataFrames.rename!(
+        df,
+        (
+            x -> lowercase(x) |> x -> replace(x, " " => "_") |> x -> replace(x, "-" => "_")
+        ).(names(df)),
+    )
+end
+
+function get_categorical_indices(df::DataFrame, cats::Vector{String})
+    return [findall((x -> contains(x, catvar)).(names(df))) for catvar in cats]
+end
