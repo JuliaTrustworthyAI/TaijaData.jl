@@ -16,7 +16,11 @@ using StatsBase
 
 A global seed to produce standardized synthetic data. This seed is used in various functions to ensure reproducibility of the synthetic datasets.
 """
-const data_seed = 42
+global data_seed = 42
+
+function data_rng(data_seed::Int64=data_seed)
+    return Xoshiro(data_seed)
+end
 
 data_dir = joinpath(artifact"data-tabular", "data-tabular")
 
@@ -27,11 +31,7 @@ include("synthetic/moons.jl")
 include("synthetic/multi_class.jl")
 include("synthetic/overlapping.jl")
 
-include("tabular/adult.jl")
-include("tabular/california_housing.jl")
-include("tabular/credit_default.jl")
-include("tabular/gmsc.jl")
-include("tabular/german_credit.jl")
+include("tabular/tabular.jl")
 
 include("vision/cifar_10.jl")
 include("vision/fashion_mnist.jl")

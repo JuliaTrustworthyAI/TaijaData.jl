@@ -5,11 +5,17 @@ using Random
 
 Returns a random number generator based on the provided seed, if seed is an integer, or returns the seed itself if it's already an `AbstractRNG`.
 """
-function get_rng(seed::Union{Int,AbstractRNG})
+function get_rng(seed::Union{Nothing,Int,AbstractRNG})
+    rng = seed
+    # Integer provided:
     if isa(seed, Int)
-        seed = Xoshiro(seed)
+        rng = Xoshiro(seed)
     end
-    return seed
+    # Nothing provided
+    if isnothing(seed)
+        rng = Random.default_rng()
+    end
+    return rng
 end
 
 function request_more_than_available(nreq, navailable)
@@ -52,6 +58,13 @@ function subsample(rng::AbstractRNG, X::AbstractMatrix, y::AbstractVector, n::In
     return (X, y)
 end
 
+function subsample(rng::AbstractRNG, X::AbstractMatrix, y::AbstractVector, n::Int, nreq::Int, ntotal::Int)
+    if !isnothing(n) && nreq != ntotal
+        X, y = subsample(rng, X, y, n)
+    end
+    return X, y
+end
+
 """
     format_header!(df::DataFrame)
 
@@ -68,4 +81,61 @@ end
 
 function get_categorical_indices(df::DataFrame, cats::Vector{String})
     return [findall((x -> contains(x, catvar)).(names(df))) for catvar in cats]
+end
+
+ensure_bounded(x::Union{Nothing,Real}) = @assert isnothing(x) ? true : 0.0 <= x <= 1.0 "Value should be inside [0,1]."
+
+function nfinal(n, ntotal, train_test_split)
+    if !isnothing(n) && n != ntotal
+        if isnothing(train_test_split)
+            return n, 0
+        else
+            nfinal_train = Int(round(train_test_split * n))
+            return nfinal_train, n - nfinal_train
+        end
+    end
+end
+
+function apply_split(train_test_split, df)
+    ntotal = size(df, 1)
+    if isnothing(train_test_split)
+        df_train = df
+        ntrain = ntotal
+        df_test = nothing
+    else
+        ntrain = Int(round(train_test_split*ntotal))
+        df_train = df[1:ntrain,:]
+        df_test = df[(ntrain + 1):end, :]
+    end
+    return df_train, df_test
+end
+
+function apply_transformations(df::DataFrame, mach)
+    df_trans = MLJBase.transform(mach, df[:, DataFrames.Not(:target)])
+    X = Matrix(df_trans)
+    X = permutedims(X)
+    y = df.target
+    return X, y, df_trans
+end
+
+"""
+    shuffle_rows([rng::AbstractRNG], df::DataFrame, shuffle::Bool)
+
+Shuffle the rows of the DataFrame.
+"""
+function shuffle_rows(rng::AbstractRNG, df::DataFrame, shuffle::Bool)
+    shuffle_warning(rng, shuffle)
+    if shuffle
+        row_idx = randperm(rng, size(df, 1))
+        df = df[row_idx, :]
+    end
+    return df
+end
+
+shuffle_rows(df::DataFrame, shuffle::Bool) = shuffle_rows(Random.default_rng(), df, shuffle)
+
+function shuffle_warning(rng::AbstractRNG, shuffle::Bool)
+    if shuffle && rng!=Random.default_rng()
+        @warn "Rows will be shuffled using non-default RNG. Repeated calls will yield the same row order. If you're loading data, try setting `seed=nothing` nothing to use the default RNG."
+    end
 end

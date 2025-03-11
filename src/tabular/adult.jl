@@ -3,13 +3,27 @@
 
 Loads data from the UCI 'Adult' dataset.
 """
-function load_uci_adult(n::Union{Nothing,Int}=1000; seed=data_seed, return_cats::Bool=false)
+function load_uci_adult(
+    n::Union{Nothing,Int}=1000;
+    seed=data_seed,
+    return_cats::Bool=false,
+    train_test_split::Union{Nothing,Real}=nothing,
+    shuffle::Bool=false,
+)
 
-    # Assertions:
+    # Setup:
+    rng = get_rng(seed)
     ensure_positive(n)
+    ensure_bounded(train_test_split)
 
     # Load data
-    df = CSV.read(joinpath(data_dir, "adult.csv"), DataFrames.DataFrame) |> format_header!
+    df, df_train, df_test, nfinal_train, nfinal_test, ntotal, nreq = pre_pre_process(
+        "adult.csv",
+        n;
+        rng,
+        shuffle,
+        train_test_split,
+    )
 
     # Categoricals:
     cats = [
@@ -24,31 +38,23 @@ function load_uci_adult(n::Union{Nothing,Int}=1000; seed=data_seed, return_cats:
     ]
     df = coerce(df, [catvar => Multiclass for catvar in cats]...)
 
-    # Transformations:
+    # Fit on train set only to avoid leakage:
     transformer = MLJModels.Standardizer(; count=true) |> MLJModels.ContinuousEncoder()
-    mach = MLJBase.fit!(machine(transformer, df[:, DataFrames.Not(:target)]))
-    X = MLJBase.transform(mach, df[:, DataFrames.Not(:target)])
 
-    # Store indices for categorical features for use with CE.jl:
-    features_categorical = get_categorical_indices(X, cats)
+    # Pre-process:
+    output = pre_process(
+        transformer,
+        df_train,
+        df_test;
+        rng,
+        nfinal_train,
+        nfinal_test,
+        ntotal,
+        nreq,
+        return_cats,
+        cats,
+        train_test_split,
+    )
 
-    X = Matrix(X)
-    X = permutedims(X)
-    y = df.target
-
-    # Checks and warnings
-    request_more_than_available(n, size(X, 2))
-
-    # Randomly under-/over-sample:
-    rng = get_rng(seed)
-    if !isnothing(n) && n != size(X)[2]
-        X, y = subsample(rng, X, y, n)
-    end
-
-    # Return categorical indices:
-    if return_cats
-        return (X, y), features_categorical
-    end
-
-    return (X, y)
+    return output
 end
