@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 *Note*: We try to adhere to these practices as of version [v1.0.1].
 
+## Version [1.1.4] - 2025-03-11
+
+### Changed
+
+- For tabular datasets, it is now possible to return training and test data, ensuring no data leakage from the transformations involved in preprocessing. [#34]
+
 ## Version [1.1.3] - 2025-03-11
 
 ### Changed
