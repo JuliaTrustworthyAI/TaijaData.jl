@@ -24,11 +24,7 @@ function load_credit_default(
 
     # Load data
     df, df_train, df_test, nfinal_train, nfinal_test, ntotal, nreq = pre_pre_process(
-        "credit_default.csv",
-        n;
-        rng,
-        shuffle,
-        train_test_split,
+        "credit_default.csv", n; rng, shuffle, train_test_split
     )
 
     # Categoricals:

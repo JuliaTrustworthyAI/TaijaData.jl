@@ -24,11 +24,7 @@ function load_uci_adult(
 
     # Load data
     df, df_train, df_test, nfinal_train, nfinal_test, ntotal, nreq = pre_pre_process(
-        "adult.csv",
-        n;
-        rng,
-        shuffle,
-        train_test_split,
+        "adult.csv", n; rng, shuffle, train_test_split
     )
 
     # Categoricals:

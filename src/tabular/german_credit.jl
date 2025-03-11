@@ -22,11 +22,7 @@ function load_german_credit(
 
     # Load data
     df, df_train, df_test, nfinal_train, nfinal_test, ntotal, nreq = pre_pre_process(
-        "german_credit.csv",
-        n;
-        rng,
-        shuffle,
-        train_test_split,
+        "german_credit.csv", n; rng, shuffle, train_test_split
     )
 
     # Transformer:
@@ -34,14 +30,7 @@ function load_german_credit(
 
     # Pre-process:
     output = pre_process(
-        transformer,
-        df_train,
-        df_test;
-        rng,
-        nfinal_train,
-        nfinal_test,
-        ntotal,
-        nreq,
+        transformer, df_train, df_test; rng, nfinal_train, nfinal_test, ntotal, nreq
     )
 
     return output

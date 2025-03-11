@@ -58,7 +58,14 @@ function subsample(rng::AbstractRNG, X::AbstractMatrix, y::AbstractVector, n::In
     return (X, y)
 end
 
-function subsample(rng::AbstractRNG, X::AbstractMatrix, y::AbstractVector, n::Union{Nothing,Int}, nreq::Union{Nothing,Int}, ntotal::Int)
+function subsample(
+    rng::AbstractRNG,
+    X::AbstractMatrix,
+    y::AbstractVector,
+    n::Union{Nothing,Int},
+    nreq::Union{Nothing,Int},
+    ntotal::Int,
+)
     if isnothing(n)
         return X, y
     end
@@ -86,7 +93,9 @@ function get_categorical_indices(df::DataFrame, cats::Vector{String})
     return [findall((x -> contains(x, catvar)).(names(df))) for catvar in cats]
 end
 
-ensure_bounded(x::Union{Nothing,Real}) = @assert isnothing(x) ? true : 0.0 <= x <= 1.0 "Value should be inside [0,1]."
+function ensure_bounded(x::Union{Nothing,Real})
+    @assert isnothing(x) ? true : 0.0 <= x <= 1.0 "Value should be inside [0,1]."
+end
 
 function nfinal(n, ntotal, train_test_split)
     if !isnothing(n) && n != ntotal
@@ -108,8 +117,8 @@ function apply_split(train_test_split, df)
         ntrain = ntotal
         df_test = nothing
     else
-        ntrain = Int(round(train_test_split*ntotal))
-        df_train = df[1:ntrain,:]
+        ntrain = Int(round(train_test_split * ntotal))
+        df_train = df[1:ntrain, :]
         df_test = df[(ntrain + 1):end, :]
     end
     return df_train, df_test
@@ -140,7 +149,7 @@ end
 shuffle_rows(df::DataFrame, shuffle::Bool) = shuffle_rows(Random.default_rng(), df, shuffle)
 
 function shuffle_warning(rng::AbstractRNG, shuffle::Bool)
-    if shuffle && rng!=Random.default_rng()
+    if shuffle && rng != Random.default_rng()
         @warn "Rows will be shuffled using non-default RNG. Repeated calls will yield the same row order. If you're loading data, try setting `seed=nothing` nothing to use the default RNG."
     end
 end

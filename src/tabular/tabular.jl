@@ -27,7 +27,7 @@ function pre_pre_process(
     end
     df = shuffle_rows(rng, df, shuffle)
     df_train, df_test = apply_split(train_test_split, df)
-    
+
     return df, df_train, df_test, nfinal_train, nfinal_test, ntotal, nreq
 end
 
@@ -59,11 +59,10 @@ function pre_process(
     return_cats::Bool=false,
     cats::Union{Nothing,Vector{<:String}}=nothing,
 )
-
     output = []
 
     mach = MLJBase.fit!(machine(transformer, df_train[:, DataFrames.Not(:target)]))
-    
+
     # Transform training data:
     X, y, df_trans = apply_transformations(df_train, mach)
     # Randomly under-/over-sample (training set):
