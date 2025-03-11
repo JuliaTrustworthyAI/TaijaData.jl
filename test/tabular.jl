@@ -50,15 +50,23 @@ using TaijaData
     @testset "UCI Adult dataset" begin
         data = load_uci_adult()
         @test size(data[1])[2] == 1000
-        @test size(data[1])[1] == 14
+        @test size(data[1])[1] == 108
         @test size(data[2])[1] == 1000
 
         data = load_uci_adult(500)
         @test size(data[1])[2] == 500
-        @test size(data[1])[1] == 14
+        @test size(data[1])[1] == 108
         @test size(data[2])[1] == 500
 
         @test_throws ArgumentError load_uci_adult(0)
         @test_throws ArgumentError load_uci_adult(-1)
+
+        data, cats = load_uci_adult(; return_cats=true)
+        @test true
+    end
+
+    @testset "Credit Default" begin
+        data, cats = load_uci_adult(; return_cats=true)
+        @test true
     end
 end

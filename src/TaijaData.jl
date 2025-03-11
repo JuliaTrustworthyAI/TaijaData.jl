@@ -110,5 +110,6 @@ export load_tabular_data
 export load_mnist, load_mnist_test
 export load_fashion_mnist, load_fashion_mnist_test
 export load_cifar_10, load_cifar_10_test
+export format_header!
 
 end
