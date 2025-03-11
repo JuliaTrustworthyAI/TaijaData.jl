@@ -15,7 +15,7 @@ function pre_pre_process(
     rng::AbstractRNG,
     shuffle::Bool,
     train_test_split::Union{Nothing,Real},
-    cats::Vector = [],
+    cats::Vector=[],
 )
     df = CSV.read(joinpath(data_dir, fname), DataFrames.DataFrame) |> format_header!
     ntotal = size(df, 1)
