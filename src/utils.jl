@@ -58,7 +58,10 @@ function subsample(rng::AbstractRNG, X::AbstractMatrix, y::AbstractVector, n::In
     return (X, y)
 end
 
-function subsample(rng::AbstractRNG, X::AbstractMatrix, y::AbstractVector, n::Int, nreq::Int, ntotal::Int)
+function subsample(rng::AbstractRNG, X::AbstractMatrix, y::AbstractVector, n::Union{Nothing,Int}, nreq::Union{Nothing,Int}, ntotal::Int)
+    if isnothing(n)
+        return X, y
+    end
     if !isnothing(n) && nreq != ntotal
         X, y = subsample(rng, X, y, n)
     end
@@ -93,6 +96,8 @@ function nfinal(n, ntotal, train_test_split)
             nfinal_train = Int(round(train_test_split * n))
             return nfinal_train, n - nfinal_train
         end
+    else
+        return nothing, nothing
     end
 end
 

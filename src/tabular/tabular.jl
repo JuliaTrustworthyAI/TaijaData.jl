@@ -1,3 +1,14 @@
+"""
+    pre_pre_process(
+        fname::String,
+        n::Union{Nothing,Int};
+        rng::AbstractRNG,
+        shuffle::Bool,
+        train_test_split::Union{Nothing,Real},
+    )
+
+Common intitial pre-processing workflow used for tabular datasets.
+"""
 function pre_pre_process(
     fname::String,
     n::Union{Nothing,Int};
@@ -9,25 +20,44 @@ function pre_pre_process(
     ntotal = size(df, 1)
     request_more_than_available(n, ntotal)
     nfinal_train, nfinal_test = nfinal(n, ntotal, train_test_split)
+    if !isnothing(nfinal_train) && !isnothing(nfinal_test)
+        nreq = nfinal_train + nfinal_test
+    else
+        nreq = nothing
+    end
     df = shuffle_rows(rng, df, shuffle)
     df_train, df_test = apply_split(train_test_split, df)
-    nreq = nfinal_train + nfinal_test
     
     return df, df_train, df_test, nfinal_train, nfinal_test, ntotal, nreq
 end
 
+"""
+    pre_process(
+        transformer,
+        df_train::DataFrame,
+        df_test::Union{Nothing,DataFrame};
+        rng::AbstractRNG,
+        nfinal_train::Union{Nothing,Int},
+        nfinal_test::Union{Nothing,Int},
+        ntotal::Int,
+        nreq::Union{Nothing,Int},
+        return_cats::Bool=false,
+        cats::Union{Nothing,Vector{<:String}}=nothing,
+    )
+
+Common final pre-processing workflow used for tabular datasets.
+"""
 function pre_process(
     transformer,
     df_train::DataFrame,
-    df_test::DataFrame;
+    df_test::Union{Nothing,DataFrame};
     rng::AbstractRNG,
-    nfinal_train::Int,
-    nfinal_test::Int,
+    nfinal_train::Union{Nothing,Int},
+    nfinal_test::Union{Nothing,Int},
     ntotal::Int,
-    nreq::Int,
+    nreq::Union{Nothing,Int},
     return_cats::Bool=false,
     cats::Union{Nothing,Vector{<:String}}=nothing,
-    train_test_split::Union{Nothing,Real}
 )
 
     output = []
@@ -43,7 +73,7 @@ function pre_process(
     push!(output, X, y)
 
     # Add test data to output, if applicable:
-    if !isnothing(train_test_split)
+    if !isnothing(df_test) && nfinal_test > 0
         # Transform test data:
         Xtest, ytest, _ = apply_transformations(df_test, mach)
         # Randomly under-/over-sample (test set):

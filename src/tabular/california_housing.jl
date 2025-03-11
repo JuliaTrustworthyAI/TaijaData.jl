@@ -1,33 +1,48 @@
 """
-    load_california_housing(n::Union{Nothing,Int}=5000; seed=data_seed)
+    load_california_housing(
+        n::Union{Nothing,Int}=5000;
+        seed=data_seed,
+        train_test_split::Union{Nothing,Real}=nothing,
+        shuffle::Bool=false,
+    )
 
 Loads California Housing data.
 """
-function load_california_housing(n::Union{Nothing,Int}=5000; seed=data_seed)
+function load_california_housing(
+    n::Union{Nothing,Int}=5000;
+    seed=data_seed,
+    train_test_split::Union{Nothing,Real}=nothing,
+    shuffle::Bool=false,
+)
 
-    # Assertions:
-    ensure_positive(n)
-
-    # Load:
-    df = CSV.read(joinpath(data_dir, "cal_housing.csv"), DataFrames.DataFrame)
-    # Pre-process features:
-    transformer = MLJModels.Standardizer(; count=true)
-    mach = MLJBase.fit!(MLJBase.machine(transformer, df[:, DataFrames.Not(:target)]))
-    X = MLJBase.transform(mach, df[:, DataFrames.Not(:target)])
-    X = Matrix(X)
-    X = permutedims(X)
-
-    # Counterfactual data:
-    y = Int.(df.target)
-
-    # Checks and warnings
-    request_more_than_available(n, size(X, 2))
-
-    # Randomly under-/over-sample:
+    # Setup:
     rng = get_rng(seed)
-    if !isnothing(n) && n != size(X)[2]
-        X, y = subsample(rng, X, y, n)
-    end
+    ensure_positive(n)
+    ensure_bounded(train_test_split)
 
-    return (X, y)
+    # Load data
+    df, df_train, df_test, nfinal_train, nfinal_test, ntotal, nreq = pre_pre_process(
+        "cal_housing.csv",
+        n;
+        rng,
+        shuffle,
+        train_test_split,
+    )
+
+    # Transformer:
+    transformer = MLJModels.Standardizer(; count=true)
+
+    # Pre-process:
+    output = pre_process(
+        transformer,
+        df_train,
+        df_test;
+        rng,
+        nfinal_train,
+        nfinal_test,
+        ntotal,
+        nreq,
+    )
+
+    return output
 end

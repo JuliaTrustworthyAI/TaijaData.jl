@@ -1,48 +1,56 @@
 """
-    load_credit_default(n::Union{Nothing,Int}=5000; seed=data_seed)
+    load_credit_default(
+        n::Union{Nothing,Int}=5000;
+        seed=data_seed,
+        train_test_split::Union{Nothing,Real}=nothing,
+        shuffle::Bool=false,
+        return_cats::Bool=false,
+    )
 
 Loads UCI Credit Default data.
 """
 function load_credit_default(
-    n::Union{Nothing,Int}=5000; seed=data_seed, return_cats::Bool=false
+    n::Union{Nothing,Int}=5000;
+    seed=data_seed,
+    train_test_split::Union{Nothing,Real}=nothing,
+    shuffle::Bool=false,
+    return_cats::Bool=false,
 )
 
-    # Assertions:
+    # Setup:
+    rng = get_rng(seed)
     ensure_positive(n)
+    ensure_bounded(train_test_split)
 
-    # Load:
-    df =
-        CSV.read(joinpath(data_dir, "credit_default.csv"), DataFrames.DataFrame) |>
-        format_header!
+    # Load data
+    df, df_train, df_test, nfinal_train, nfinal_test, ntotal, nreq = pre_pre_process(
+        "credit_default.csv",
+        n;
+        rng,
+        shuffle,
+        train_test_split,
+    )
 
     # Categoricals:
     cats = ["sex", "education", "marriage"]
     df = coerce(df, [catvar => Multiclass for catvar in cats]...)
 
-    # Transformations:
+    # Transformer:
     transformer = MLJModels.Standardizer(; count=true) |> MLJModels.ContinuousEncoder()
-    mach = MLJBase.fit!(MLJBase.machine(transformer, df[:, DataFrames.Not(:target)]))
-    X = MLJBase.transform(mach, df[:, DataFrames.Not(:target)])
 
-    # Store indices for categorical features for use with CE.jl:
-    features_categorical = get_categorical_indices(X, cats)
+    # Pre-process:
+    output = pre_process(
+        transformer,
+        df_train,
+        df_test;
+        rng,
+        nfinal_train,
+        nfinal_test,
+        ntotal,
+        nreq,
+        return_cats,
+        cats,
+    )
 
-    X = permutedims(Matrix(X))
-    y = df.target
-
-    # Checks and warnings
-    request_more_than_available(n, size(X, 2))
-
-    # Randomly under-/over-sample:
-    rng = get_rng(seed)
-    if !isnothing(n) && n != size(X)[2]
-        X, y = subsample(rng, X, y, n)
-    end
-
-    # Return categorical indices:
-    if return_cats
-        return (X, y), features_categorical
-    end
-
-    return (X, y)
+    return output
 end
