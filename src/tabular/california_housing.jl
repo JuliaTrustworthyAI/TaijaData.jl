@@ -21,7 +21,7 @@ function load_california_housing(
     ensure_bounded(train_test_split)
 
     # Load data
-    df, df_train, df_test, nfinal_train, nfinal_test, ntotal, nreq = pre_pre_process(
+    df_train, df_test, nfinal_train, nfinal_test, ntotal, nreq = pre_pre_process(
         "cal_housing.csv", n; rng, shuffle, train_test_split
     )
 

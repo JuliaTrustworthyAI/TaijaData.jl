@@ -15,6 +15,7 @@ function pre_pre_process(
     rng::AbstractRNG,
     shuffle::Bool,
     train_test_split::Union{Nothing,Real},
+    cats::Vector = [],
 )
     df = CSV.read(joinpath(data_dir, fname), DataFrames.DataFrame) |> format_header!
     ntotal = size(df, 1)
@@ -26,9 +27,15 @@ function pre_pre_process(
         nreq = nothing
     end
     df = shuffle_rows(rng, df, shuffle)
+
+    # Categoricals:
+    if length(cats) > 0
+        df = coerce(df, [catvar => Multiclass for catvar in cats]...)
+    end
+
     df_train, df_test = apply_split(train_test_split, df)
 
-    return df, df_train, df_test, nfinal_train, nfinal_test, ntotal, nreq
+    return df_train, df_test, nfinal_train, nfinal_test, ntotal, nreq
 end
 
 """

@@ -21,7 +21,7 @@ function load_german_credit(
     ensure_bounded(train_test_split)
 
     # Load data
-    df, df_train, df_test, nfinal_train, nfinal_test, ntotal, nreq = pre_pre_process(
+    df_train, df_test, nfinal_train, nfinal_test, ntotal, nreq = pre_pre_process(
         "german_credit.csv", n; rng, shuffle, train_test_split
     )
 

@@ -22,14 +22,18 @@ function load_credit_default(
     ensure_positive(n)
     ensure_bounded(train_test_split)
 
-    # Load data
-    df, df_train, df_test, nfinal_train, nfinal_test, ntotal, nreq = pre_pre_process(
-        "credit_default.csv", n; rng, shuffle, train_test_split
-    )
-
     # Categoricals:
     cats = ["sex", "education", "marriage"]
-    df = coerce(df, [catvar => Multiclass for catvar in cats]...)
+
+    # Load data
+    df_train, df_test, nfinal_train, nfinal_test, ntotal, nreq = pre_pre_process(
+        "credit_default.csv",
+        n;
+        rng,
+        shuffle,
+        train_test_split,
+        cats,
+    )
 
     # Transformer:
     transformer = MLJModels.Standardizer(; count=true) |> MLJModels.ContinuousEncoder()

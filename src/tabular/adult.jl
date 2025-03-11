@@ -22,11 +22,6 @@ function load_uci_adult(
     ensure_positive(n)
     ensure_bounded(train_test_split)
 
-    # Load data
-    df, df_train, df_test, nfinal_train, nfinal_test, ntotal, nreq = pre_pre_process(
-        "adult.csv", n; rng, shuffle, train_test_split
-    )
-
     # Categoricals:
     cats = [
         "workclass",
@@ -38,7 +33,11 @@ function load_uci_adult(
         "sex",
         "country",
     ]
-    df = coerce(df, [catvar => Multiclass for catvar in cats]...)
+
+    # Load data
+    df_train, df_test, nfinal_train, nfinal_test, ntotal, nreq = pre_pre_process(
+        "adult.csv", n; rng, shuffle, train_test_split, cats
+    )
 
     # Fit on train set only to avoid leakage:
     transformer = MLJModels.Standardizer(; count=true) |> MLJModels.ContinuousEncoder()
