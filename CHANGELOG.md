@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 *Note*: We try to adhere to these practices as of version [v1.0.1].
 
+## Version [1.1.5] - 2025-03-12
+
+### Changed
+
+- Fixed a small bug in `nfinal`. 
+
 ## Version [1.1.4] - 2025-03-11
 
 ### Changed
