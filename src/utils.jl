@@ -98,7 +98,6 @@ function ensure_bounded(x::Union{Nothing,Real})
 end
 
 function nfinal(n, ntotal, train_test_split)
-
     if !isnothing(n) && n != ntotal
         ntotal = n
     end
@@ -109,7 +108,6 @@ function nfinal(n, ntotal, train_test_split)
         nfinal_train = Int(round(train_test_split * ntotal))
         return nfinal_train, ntotal - nfinal_train
     end
-
 end
 
 function apply_split(train_test_split, df)
