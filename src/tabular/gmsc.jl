@@ -1,6 +1,10 @@
 struct GMSC <: TabularData end
 
-get_feature_names(data::GMSC) = get_feature_names("gmsc.csv")
+get_original_feature_names(data::GMSC) = get_original_feature_names("gmsc.csv")
+
+load_data(data::GMSC; kwrgs...) = load_gmsc(; kwrgs...)
+
+get_feature_names(data::GMSC) = load_data(data; feature_names=true)
 
 """
     load_gmsc(
@@ -17,6 +21,7 @@ function load_gmsc(
     seed=data_seed,
     train_test_split::Union{Nothing,Real}=nothing,
     shuffle::Bool=false,
+    kwrgs...,
 )
 
     # Setup:
@@ -34,7 +39,15 @@ function load_gmsc(
 
     # Pre-process:
     output = pre_process(
-        transformer, df_train, df_test; rng, nfinal_train, nfinal_test, ntotal, nreq
+        transformer,
+        df_train,
+        df_test;
+        rng,
+        nfinal_train,
+        nfinal_test,
+        ntotal,
+        nreq,
+        kwrgs...,
     )
 
     return output

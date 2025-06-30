@@ -42,11 +42,11 @@ function pre_pre_process(
 end
 
 """
-    get_feature_names(fname::String)
+    get_original_feature_names(fname::String)
 
-Helper function to get feature names.
+Helper function to get feature names prior to preprocessing.
 """
-function get_feature_names(fname::String)
+function get_original_feature_names(fname::String)
     df = CSV.read(joinpath(data_dir, fname), DataFrames.DataFrame) |> format_header!
     return names(df)[names(df) .!= "target"]
 end
@@ -78,6 +78,7 @@ function pre_process(
     nreq::Union{Nothing,Int},
     return_cats::Bool=false,
     cats::Union{Nothing,Vector{<:String}}=nothing,
+    feature_names::Bool=false,
 )
     output = []
 
@@ -85,6 +86,12 @@ function pre_process(
 
     # Transform training data:
     X, y, df_trans = apply_transformations(df_train, mach)
+
+    # Simply return final feature names:
+    if feature_names
+        return names(df_trans)
+    end
+
     # Randomly under-/over-sample (training set):
     X, y = subsample(rng, X, y, nfinal_train, nreq, ntotal)
 

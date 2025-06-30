@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## Version [1.1.7] - 2025-06-30
 
+### Added
+
+- Added helper function that returns feature names after preprocessing.
+
 ### Changed
 
 - Helper function that returns the feature names for tabular datasets no longer returns "target" name.

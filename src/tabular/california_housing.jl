@@ -1,6 +1,12 @@
 struct CaliHousing <: TabularData end
 
-get_feature_names(data::CaliHousing) = get_feature_names("cal_housing.csv")
+function get_original_feature_names(data::CaliHousing)
+    get_original_feature_names("cal_housing.csv")
+end
+
+load_data(data::CaliHousing; kwrgs...) = load_california_housing(; kwrgs...)
+
+get_feature_names(data::CaliHousing) = load_data(data; feature_names=true)
 
 """
     load_california_housing(
@@ -17,6 +23,7 @@ function load_california_housing(
     seed=data_seed,
     train_test_split::Union{Nothing,Real}=nothing,
     shuffle::Bool=false,
+    kwrgs...,
 )
 
     # Setup:
@@ -34,7 +41,15 @@ function load_california_housing(
 
     # Pre-process:
     output = pre_process(
-        transformer, df_train, df_test; rng, nfinal_train, nfinal_test, ntotal, nreq
+        transformer,
+        df_train,
+        df_test;
+        rng,
+        nfinal_train,
+        nfinal_test,
+        ntotal,
+        nreq,
+        kwrgs...,
     )
 
     return output

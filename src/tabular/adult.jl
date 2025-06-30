@@ -1,6 +1,10 @@
 struct Adult <: TabularData end
 
-get_feature_names(data::Adult) = get_feature_names("adult.csv")
+get_original_feature_names(data::Adult) = get_original_feature_names("adult.csv")
+
+load_data(data::Adult; kwrgs...) = load_uci_adult(; kwrgs...)
+
+get_feature_names(data::Adult) = load_data(data; feature_names=true)
 
 """
     load_uci_adult(
@@ -19,6 +23,7 @@ function load_uci_adult(
     return_cats::Bool=false,
     train_test_split::Union{Nothing,Real}=nothing,
     shuffle::Bool=false,
+    kwrgs...,
 )
 
     # Setup:
@@ -58,6 +63,7 @@ function load_uci_adult(
         nreq,
         return_cats,
         cats,
+        kwrgs...,
     )
 
     return output

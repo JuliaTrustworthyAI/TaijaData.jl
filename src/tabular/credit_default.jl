@@ -1,6 +1,12 @@
 struct CreditDefault <: TabularData end
 
-get_feature_names(data::CreditDefault) = get_feature_names("credit_default.csv")
+function get_original_feature_names(data::CreditDefault)
+    get_original_feature_names("credit_default.csv")
+end
+
+load_data(data::CreditDefault; kwrgs...) = load_credit_default(; kwrgs...)
+
+get_feature_names(data::CreditDefault) = load_data(data; feature_names=true)
 
 """
     load_credit_default(
@@ -19,6 +25,7 @@ function load_credit_default(
     train_test_split::Union{Nothing,Real}=nothing,
     shuffle::Bool=false,
     return_cats::Bool=false,
+    kwrgs...,
 )
 
     # Setup:
@@ -49,6 +56,7 @@ function load_credit_default(
         nreq,
         return_cats,
         cats,
+        kwrgs...,
     )
 
     return output
