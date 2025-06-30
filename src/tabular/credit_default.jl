@@ -1,3 +1,7 @@
+struct CreditDefault <: TabularData end
+
+get_feature_names(data::CreditDefault) = get_feature_names("credit_default.csv")
+
 """
     load_credit_default(
         n::Union{Nothing,Int}=5000;

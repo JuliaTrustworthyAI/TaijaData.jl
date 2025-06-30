@@ -1,3 +1,6 @@
+"Abstract type for tabular datasets."
+abstract type TabularData end
+
 """
     pre_pre_process(
         fname::String,
@@ -36,6 +39,16 @@ function pre_pre_process(
     df_train, df_test = apply_split(train_test_split, df)
 
     return df_train, df_test, nfinal_train, nfinal_test, ntotal, nreq
+end
+
+"""
+    get_feature_names(fname::String)
+
+Helper function to get feature names.
+"""
+function get_feature_names(fname::String)
+    df = CSV.read(joinpath(data_dir, fname), DataFrames.DataFrame) |> format_header!
+    return names(df)
 end
 
 """

@@ -1,3 +1,7 @@
+struct GermanCredit <: TabularData end
+
+get_feature_names(data::GermanCredit) = get_feature_names("german_credit.csv")
+
 """
     load_german_credit(
         n::Union{Nothing,Int}=nothing;

@@ -1,3 +1,7 @@
+struct Adult <: TabularData end
+
+get_feature_names(data::Adult) = get_feature_names("adult.csv")
+
 """
     load_uci_adult(
         n::Union{Nothing,Int}=1000;

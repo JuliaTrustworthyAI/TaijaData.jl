@@ -83,9 +83,9 @@ Helper function to apply some standard formatting to headers.
 function format_header!(df::DataFrame)
     return DataFrames.rename!(
         df,
-        (
-            x -> lowercase(x) |> x -> replace(x, " " => "_") |> x -> replace(x, "-" => "_")
-        ).(names(df)),
+        (x -> lowercase(x) |> x -> replace(x, " " => "_") |> x -> replace(x, "-" => "_")).(
+            names(df)
+        ),
     )
 end
 

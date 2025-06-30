@@ -1,3 +1,7 @@
+struct CaliHousing <: TabularData end
+
+get_feature_names(data::CaliHousing) = get_feature_names("cal_housing.csv")
+
 """
     load_california_housing(
         n::Union{Nothing,Int}=5000;

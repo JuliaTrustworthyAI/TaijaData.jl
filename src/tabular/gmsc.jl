@@ -1,3 +1,7 @@
+struct GMSC <: TabularData end
+
+get_feature_names(data::GMSC) = get_feature_names("gmsc.csv")
+
 """
     load_gmsc(
         n::Union{Nothing,Int}=5000;
