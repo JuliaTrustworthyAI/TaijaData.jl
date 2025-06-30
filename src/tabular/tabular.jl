@@ -48,7 +48,7 @@ Helper function to get feature names.
 """
 function get_feature_names(fname::String)
     df = CSV.read(joinpath(data_dir, fname), DataFrames.DataFrame) |> format_header!
-    return names(df)
+    return names(df)[names(df) .!= "target"]
 end
 
 """

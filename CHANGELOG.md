@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 *Note*: We try to adhere to these practices as of version [v1.0.1].
 
+## Version [1.1.7] - 2025-06-30
+
+### Changed
+
+- Helper function that returns the feature names for tabular datasets no longer returns "target" name.
+
 ## Version [1.1.6] - 2025-06-30
 
 ### Added
