@@ -37,7 +37,8 @@ function load_california_housing(
     )
 
     # Transformer:
-    transformer = MLJModels.Standardizer(; count=true)
+    Standardizer = MLJ.@load Standardizer verbosity=0
+    transformer = Standardizer(; count=true)
 
     # Pre-process:
     output = pre_process(

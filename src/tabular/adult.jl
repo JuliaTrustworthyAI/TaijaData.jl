@@ -5,7 +5,7 @@ get_original_feature_names(data::Adult) = get_original_feature_names("adult.csv"
 load_data(data::Adult; kwrgs...) = load_uci_adult(; kwrgs...)
 
 get_feature_names(data::Adult) = load_data(data; feature_names=true)
-
+using MLJ
 """
     load_uci_adult(
         n::Union{Nothing,Int}=1000;
@@ -48,8 +48,12 @@ function load_uci_adult(
         "adult.csv", n; rng, shuffle, train_test_split, cats
     )
 
+    # Load model types:
+    Standardizer = MLJ.@load Standardizer verbosity=0
+    ContinuousEncoder = MLJ.@load ContinuousEncoder verbosity=0
+
     # Fit on train set only to avoid leakage:
-    transformer = MLJModels.Standardizer(; count=true) |> MLJModels.ContinuousEncoder()
+    transformer = Standardizer(; count=true) |> ContinuousEncoder()
 
     # Pre-process:
     output = pre_process(
