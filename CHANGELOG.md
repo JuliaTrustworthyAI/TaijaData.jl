@@ -6,12 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 *Note*: We try to adhere to these practices as of version [v1.0.1].
 
-## Version [1.1.8] - 2025-12-05
+## Version [1.1.8] - 2026-02-04 
 
 ### Changed
 
-- Temporarily removed `CounterfactualExplanations` from dependencies due to incompatibility with latest MLJ/Flux ecosystem.
-- Counterfactual explanation functionality is currently unavailable until upstream compatibility is restored.
+- Temporarily removed `CounterfactualExplanations` from dependencies due to incompatibility with latest MLJ/Flux ecosystem. (Not used here at the moment anyway).
+- Updated Flux compat
 
 ## Version [1.1.7] - 2025-06-30
 

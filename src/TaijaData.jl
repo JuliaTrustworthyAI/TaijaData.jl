@@ -1,6 +1,7 @@
 module TaijaData
 
 using DataAPI
+using Flux
 using Random
 using LazyArtifacts
 using MLJBase
