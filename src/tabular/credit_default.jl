@@ -1,13 +1,12 @@
 struct CreditDefault <: TabularData end
 
 function get_original_feature_names(data::CreditDefault)
-    get_original_feature_names("credit_default.csv")
+    return get_original_feature_names("credit_default.csv")
 end
 
 load_data(data::CreditDefault; kwrgs...) = load_credit_default(; kwrgs...)
 
 get_feature_names(data::CreditDefault) = load_data(data; feature_names=true)
-using MLJ
 """
     load_credit_default(
         n::Union{Nothing,Int}=5000;
@@ -41,12 +40,9 @@ function load_credit_default(
         "credit_default.csv", n; rng, shuffle, train_test_split, cats
     )
 
-    # Load model types:
-    Standardizer = MLJ.@load Standardizer verbosity=0
-    ContinuousEncoder = MLJ.@load ContinuousEncoder verbosity=0
-
     # Transformer:
-    transformer = Standardizer(; count=true) |> ContinuousEncoder()
+    transformer =
+        MLJTransforms.Standardizer(; count=true) |> MLJTransforms.ContinuousEncoder()
 
     # Pre-process:
     output = pre_process(

@@ -1,7 +1,7 @@
 name = "TaijaData"
 uuid = "9d524318-b4e6-4a65-86d2-b2b72d07866c"
 authors = ["Patrick Altmeyer"]
-version = "1.1.8"
+version = "1.1.9"
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
@@ -10,7 +10,6 @@ DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 Flux = "587475ba-b771-5e3f-ad9e-33799f191a9c"
 LazyArtifacts = "4af54fe1-eca0-43a8-85a7-787d91b784e3"
 MLDatasets = "eb30cadb-4394-5ae3-aed4-317e484a6458"
-MLJ = "add582a8-e3ab-11e8-2d5e-e98b27df1bc7"
 MLJBase = "a7f614a8-145f-11e9-1d2a-a57a1082229d"
 MLJModels = "d491faf4-2d78-11e9-2867-c94bc002c0b7"
 MLJTransforms = "23777cdb-d90c-4eb0-a694-7c2b83d5c1d6"
@@ -24,10 +23,9 @@ DataFrames = "1"
 Flux = "0.13, 0.14, 0.15, 0.16"
 LazyArtifacts = "1"
 MLDatasets = "0.7"
-MLJ = "0.22.0"
 MLJBase = "0.21, 1"
 MLJModels = "0.18"
-MLJTransforms = "0.1.4"
+MLJTransforms = "0.1"
 StatsBase = "0.33, 0.34"
 julia = "1.10"
 
