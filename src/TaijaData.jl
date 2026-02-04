@@ -7,7 +7,6 @@ using MLJBase
 using CSV
 using DataFrames
 using MLJModels
-using Flux
 using MLDatasets
 using StatsBase
 
