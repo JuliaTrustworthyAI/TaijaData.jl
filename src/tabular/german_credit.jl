@@ -1,13 +1,12 @@
 struct GermanCredit <: TabularData end
 
 function get_original_feature_names(data::GermanCredit)
-    get_original_feature_names("german_credit.csv")
+    return get_original_feature_names("german_credit.csv")
 end
 
 load_data(data::GermanCredit; kwrgs...) = load_german_credit(; kwrgs...)
 
 get_feature_names(data::GermanCredit) = load_data(data; feature_names=true)
-using MLJ
 """
     load_german_credit(
         n::Union{Nothing,Int}=nothing;
@@ -37,8 +36,7 @@ function load_german_credit(
     )
 
     # Transformer:
-    Standardizer = MLJ.@load Standardizer verbosity=0
-    transformer = Standardizer(; count=true)
+    transformer = MLJTransforms.Standardizer(; count=true)
 
     # Pre-process:
     output = pre_process(

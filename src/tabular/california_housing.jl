@@ -1,7 +1,7 @@
 struct CaliHousing <: TabularData end
 
 function get_original_feature_names(data::CaliHousing)
-    get_original_feature_names("cal_housing.csv")
+    return get_original_feature_names("cal_housing.csv")
 end
 
 load_data(data::CaliHousing; kwrgs...) = load_california_housing(; kwrgs...)
@@ -37,8 +37,7 @@ function load_california_housing(
     )
 
     # Transformer:
-    Standardizer = MLJ.@load Standardizer verbosity=0
-    transformer = Standardizer(; count=true)
+    transformer = MLJTransforms.Standardizer(; count=true)
 
     # Pre-process:
     output = pre_process(

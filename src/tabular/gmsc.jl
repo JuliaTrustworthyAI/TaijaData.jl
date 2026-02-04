@@ -5,7 +5,6 @@ get_original_feature_names(data::GMSC) = get_original_feature_names("gmsc.csv")
 load_data(data::GMSC; kwrgs...) = load_gmsc(; kwrgs...)
 
 get_feature_names(data::GMSC) = load_data(data; feature_names=true)
-using MLJ
 """
     load_gmsc(
         n::Union{Nothing,Int}=5000;
@@ -35,8 +34,7 @@ function load_gmsc(
     )
 
     # Transformer:
-    Standardizer = MLJ.@load Standardizer verbosity=0
-    transformer = Standardizer(; count=true)
+    transformer = MLJTransforms.Standardizer(; count=true)
 
     # Pre-process:
     output = pre_process(

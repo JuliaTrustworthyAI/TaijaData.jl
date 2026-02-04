@@ -7,8 +7,9 @@ using LazyArtifacts
 using MLJBase
 using CSV
 using DataFrames
-using MLJModels
 using MLDatasets
+using MLJModels
+using MLJTransforms
 using StatsBase
 
 """
