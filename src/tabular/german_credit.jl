@@ -7,7 +7,7 @@ end
 load_data(data::GermanCredit; kwrgs...) = load_german_credit(; kwrgs...)
 
 get_feature_names(data::GermanCredit) = load_data(data; feature_names=true)
-
+using MLJ
 """
     load_german_credit(
         n::Union{Nothing,Int}=nothing;
@@ -37,7 +37,8 @@ function load_german_credit(
     )
 
     # Transformer:
-    transformer = MLJModels.Standardizer(; count=true)
+    Standardizer = MLJ.@load Standardizer verbosity=0
+    transformer = Standardizer(; count=true)
 
     # Pre-process:
     output = pre_process(
